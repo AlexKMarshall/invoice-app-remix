@@ -8,7 +8,16 @@ export default {
 } as ComponentMeta<typeof StatusBadge>
 
 const Template: ComponentStory<typeof StatusBadge> = (args) => (
-  <StatusBadge {...args} />
+  <div className="space-y-6">
+    <div className="p-4 space-y-4 rounded bg-slate-50">
+      <h2 className="text-lg font-bold">Light Mode</h2>
+      <StatusBadge {...args} />
+    </div>
+    <div className="p-4 space-y-4 rounded dark bg-slate-900">
+      <h2 className="text-lg font-bold text-white">Dark Mode</h2>
+      <StatusBadge {...args} />
+    </div>
+  </div>
 )
 
 export const Paid = Template.bind({})
