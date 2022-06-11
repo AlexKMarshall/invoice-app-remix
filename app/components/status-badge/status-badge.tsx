@@ -6,7 +6,10 @@ type Status = "pending" | "paid" | "draft";
 const statusClassNameMap: Record<Status, ClassValue> = {
   paid: "text-emerald-400 bg-emerald-400/5 before:bg-emerald-400",
   pending: "text-amber-500 bg-amber-500/5 before:bg-amber-500",
-  draft: "text-zinc-700 bg-zinc-700/5 before:bg-zinc-700",
+  draft: clsx(
+    "text-zinc-700 bg-zinc-700/5 before:bg-zinc-700",
+    "dark:text-zinc-300 dark:bg-zinc-300/5 dark:before:bg-zinc-300"
+  ),
 };
 
 type Props = { status: Status };
