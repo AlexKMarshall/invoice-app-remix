@@ -4,8 +4,14 @@ import clsx from 'clsx'
 type Status = 'pending' | 'paid' | 'draft'
 
 const statusClassNameMap: Record<Status, ClassValue> = {
-  paid: 'text-emerald-400 bg-emerald-400/5 before:bg-emerald-400',
-  pending: 'text-amber-500 bg-amber-500/5 before:bg-amber-500',
+  paid: clsx(
+    'text-emerald-800 bg-emerald-400/5 before:bg-emerald-400',
+    'dark:text-emerald-400'
+  ),
+  pending: clsx(
+    'text-amber-700 bg-amber-500/5 before:bg-amber-500',
+    'dark:text-amber-500'
+  ),
   draft: clsx(
     'text-zinc-700 bg-zinc-700/5 before:bg-zinc-700',
     'dark:text-zinc-300 dark:bg-zinc-300/5 dark:before:bg-zinc-300'
