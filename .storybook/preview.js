@@ -9,6 +9,7 @@ export const parameters = {
     },
   },
   darkMode: {
+    classTarget: "html",
     stylePreview: true,
   },
 };
