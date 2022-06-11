@@ -1,25 +1,25 @@
-import type { ComponentMeta, ComponentStory } from "@storybook/react";
+import type { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import { StatusBadge } from ".";
+import { StatusBadge } from '.'
 
 export default {
-  title: "Atoms/StatusBadge",
+  title: 'Atoms/StatusBadge',
   component: StatusBadge,
-} as ComponentMeta<typeof StatusBadge>;
+} as ComponentMeta<typeof StatusBadge>
 
 const Template: ComponentStory<typeof StatusBadge> = (args) => (
   <StatusBadge {...args} />
-);
+)
 
-export const Paid = Template.bind({});
+export const Paid = Template.bind({})
 Paid.args = {
-  status: "paid",
-};
-export const Pending = Template.bind({});
+  status: 'paid',
+}
+export const Pending = Template.bind({})
 Pending.args = {
-  status: "pending",
-};
-export const Draft = Template.bind({});
+  status: 'pending',
+}
+export const Draft = Template.bind({})
 Draft.args = {
-  status: "draft",
-};
+  status: 'draft',
+}

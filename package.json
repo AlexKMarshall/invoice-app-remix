@@ -26,7 +26,6 @@
     "test-storybook": "test-storybook",
     "chromatic": "npx chromatic"
   },
-  "prettier": {},
   "eslintIgnore": [
     "/node_modules",
     "/build",
