@@ -80,6 +80,7 @@ jobs:
         run: npm run test -- --coverage
 
   chromatic:
+    name: 🎨 Chromatic
     runs-on: ubuntu-latest
     steps:
       - name: 🛑 Cancel Previous Runs
