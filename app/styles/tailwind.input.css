@@ -1,0 +1,12 @@
+@tailwind base;
+
+@layer base {
+  html {
+    @apply font-medium;
+  }
+  body {
+    @apply text-xs;
+  }
+}
+@tailwind components;
+@tailwind utilities;

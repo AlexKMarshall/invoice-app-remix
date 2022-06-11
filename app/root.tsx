@@ -17,7 +17,19 @@ import tailwindStylesheetUrl from "./styles/tailwind.css";
 import { getUser } from "./session.server";
 
 export const links: LinksFunction = () => {
-  return [{ rel: "stylesheet", href: tailwindStylesheetUrl }];
+  return [
+    { rel: "preconnect", href: "https://fonts.googleapis.com" },
+    {
+      rel: "preconnect",
+      href: "https://fonts.gstatic.com",
+      crossOrigin: "anonymous",
+    },
+    {
+      rel: "stylesheet",
+      href: "https://fonts.googleapis.com/css2?family=Spartan:wght@500;700&display=swap",
+    },
+    { rel: "stylesheet", href: tailwindStylesheetUrl },
+  ];
 };
 
 export const meta: MetaFunction = () => ({
@@ -43,7 +55,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="h-full">
+      <body className="h-full font-medium">
         <Outlet />
         <ScrollRestoration />
         <Scripts />
