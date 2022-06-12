@@ -1,9 +1,10 @@
 import { InvoiceId } from '~/components/atoms/invoice-id'
 import { StatusBadge } from '~/components/atoms/status-badge'
 import clsx from 'clsx'
-import type { MouseEventHandler, ReactNode, RefObject } from 'react'
-import { createContext, useContext, useEffect, useRef, useState } from 'react'
+import type { MouseEventHandler } from 'react'
+import { useRef } from 'react'
 import useClickUnlessDrag from '~/hooks/use-click-unless-drag'
+import { Link as RemixLink } from '@remix-run/react'
 
 const dateFormatter = new Intl.DateTimeFormat(undefined, {
   day: '2-digit',
@@ -18,6 +19,7 @@ type Props = {
   amount: number
   currency: 'GBP'
   status: 'paid' | 'pending' | 'draft'
+  Link: typeof RemixLink
 }
 export function InvoiceSummary({
   id,
@@ -26,6 +28,7 @@ export function InvoiceSummary({
   amount,
   currency,
   status,
+  Link = RemixLink,
 }: Props): JSX.Element {
   const currencyFormatter = new Intl.NumberFormat(undefined, {
     style: 'currency',
@@ -35,17 +38,6 @@ export function InvoiceSummary({
   const href = `/invoices/${id}`
 
   const anchorRef = useRef<HTMLAnchorElement>(null)
-
-  const { eventBoundaryRef } = useLinkActionContext()
-
-  const handleStorybookLinkClick: MouseEventHandler<HTMLAnchorElement> = (
-    event
-  ) => {
-    event.preventDefault()
-    eventBoundaryRef.current?.dispatchEvent(
-      new CustomEvent('would-navigate', { detail: href })
-    )
-  }
 
   const handleInvoiceClick: MouseEventHandler<HTMLDivElement> = (event) => {
     const clickedOnAnchor =
@@ -73,14 +65,9 @@ export function InvoiceSummary({
         )}
       >
         <h2 className="sm:-order-2">
-          <a
-            href={href}
-            onClick={handleStorybookLinkClick}
-            className="focus:outline-none"
-            ref={anchorRef}
-          >
+          <Link to={href} className="focus:outline-none" ref={anchorRef}>
             <InvoiceId id={id} />
-          </a>
+          </Link>
         </h2>
         <p className="sm:grow">{name}</p>
       </div>
@@ -109,57 +96,5 @@ export function InvoiceSummary({
         <StatusBadge status={status} />
       </div>
     </article>
-  )
-}
-
-type LinkActionContextType = {
-  eventBoundaryRef: RefObject<HTMLDivElement>
-}
-const LinkActionContext = createContext<LinkActionContextType | undefined>(
-  undefined
-)
-const useLinkActionContext = () => {
-  const context = useContext(LinkActionContext)
-  if (!context)
-    throw new Error(
-      'useLinkActionContext must be used within LinkActionProvider'
-    )
-  return context
-}
-
-type LinkActionWrapperProps = {
-  onWouldNavigate?: (event: CustomEvent['detail']) => void
-  children: ReactNode
-}
-export const LinkActionWrapper = ({
-  onWouldNavigate,
-  children,
-}: LinkActionWrapperProps) => {
-  const [state, setState] = useState<'loading' | 'ready'>('loading')
-  const eventBoundaryRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const eventBoundary = eventBoundaryRef.current
-    const handleWouldNavigate = (e: Event) => {
-      if (e instanceof CustomEvent) {
-        onWouldNavigate?.(e.detail)
-      }
-    }
-
-    if (eventBoundary) {
-      eventBoundary.addEventListener('would-navigate', handleWouldNavigate)
-      setState('ready')
-      return () => {
-        eventBoundary.removeEventListener('would-navigate', handleWouldNavigate)
-      }
-    }
-  }, [onWouldNavigate])
-
-  return (
-    <LinkActionContext.Provider value={{ eventBoundaryRef }}>
-      <div ref={eventBoundaryRef}>
-        {state === 'ready' ? children : <div>Loading&hellip;</div>}
-      </div>
-    </LinkActionContext.Provider>
   )
 }

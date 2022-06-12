@@ -1,9 +1,13 @@
-import { InvoiceSummary, LinkActionWrapper } from '.'
+import {
+  LinkActionWrapper,
+  StorybookMockLink,
+} from '~/storybook-helpers/mock-link'
 import type { Meta, Story } from '@storybook/react'
 import { userEvent, within } from '@storybook/testing-library'
 
 import { ColorSchemeContainer } from '~/storybook-helpers/color-scheme-container'
 import type { ComponentProps } from 'react'
+import { InvoiceSummary } from '.'
 import { expect } from '@storybook/jest'
 
 type StoryArgs = ComponentProps<typeof InvoiceSummary> &
@@ -14,6 +18,9 @@ export default {
   component: InvoiceSummary,
   argTypes: {
     onWouldNavigate: { action: true },
+  },
+  args: {
+    Link: StorybookMockLink,
   },
   parameters: {
     chromatic: { viewports: [320, 420, 850, 1200] },
