@@ -18,7 +18,7 @@ module.exports = {
   },
   plugins: [
     plugin(({ addVariant }) => {
-      addVariant('aria-invalid', `&[aria-invalid='true']`)
+      addVariant('aria-invalid', `&[aria-invalid]`)
     }),
   ],
 }

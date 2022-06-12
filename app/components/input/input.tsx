@@ -16,7 +16,7 @@ export function Input({ label, errorMessage, ...props }: Props): JSX.Element {
     <div
       className={clsx(
         'flex flex-col gap-2',
-        props.readOnly ? 'opacity-50' : ''
+        props.disabled ? 'opacity-50' : ''
       )}
     >
       <div
@@ -32,8 +32,8 @@ export function Input({ label, errorMessage, ...props }: Props): JSX.Element {
       </div>
       <input
         {...props}
-        aria-invalid={Boolean(errorMessage)}
-        aria-errorMessage={errorMessageId}
+        aria-invalid={errorMessage ? true : undefined}
+        aria-errormessage={errorMessageId}
         className={clsx(
           'rounded-sm bg-gray-50 px-5 py-4 font-bold text-strong caret-violet-600 outline outline-2 outline-regular/40',
           'focus-visible:outline-violet-600',

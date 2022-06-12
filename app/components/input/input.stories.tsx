@@ -68,18 +68,5 @@ WithErrorMessage.play = async ({ canvasElement }) => {
 export const WithPlaceholder = Template.bind({})
 WithPlaceholder.args = { defaultValue: '' }
 
-export const ReadOnly = Template.bind({})
-ReadOnly.args = { readOnly: true, value: '321 Fixed Avenue' }
-ReadOnly.parameters = {
-  a11y: {
-    config: {
-      rules: [
-        {
-          // @fixme color contrast of read only fields fails
-          id: 'color-contrast',
-          enabled: false,
-        },
-      ],
-    },
-  },
-}
+export const Disabled = Template.bind({})
+Disabled.args = { value: '321 Fixed Avenue', disabled: true }
