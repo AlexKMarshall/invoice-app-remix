@@ -7,17 +7,20 @@ type Props = {
   Link?: typeof RemixLink
 }
 export function Invoices({ invoices, Link = RemixLink }: Props): JSX.Element {
+  const invoiceCount = invoices.length
   return (
-    <>
-      <h1>Invoices</h1>
-      <p>There are 4 total invoices</p>
-      <ul>
+    <div className="space-y-8">
+      <div className="space-y-1">
+        <h1 className="text-xl font-bold text-strong">Invoices</h1>
+        <p>There are {invoiceCount} total invoices</p>
+      </div>
+      <ul className="space-y-4">
         {invoices.map((invoice) => (
           <li key={invoice.id}>
             <InvoiceSummary {...invoice} Link={Link} />
           </li>
         ))}
       </ul>
-    </>
+    </div>
   )
 }
