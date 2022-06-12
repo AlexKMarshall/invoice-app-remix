@@ -1,5 +1,6 @@
 import type { ComponentMeta, ComponentStory } from '@storybook/react'
 
+import { ColorSchemeContainer } from '~/storybook-helpers/color-scheme-container'
 import { StatusBadge } from '.'
 
 export default {
@@ -8,16 +9,9 @@ export default {
 } as ComponentMeta<typeof StatusBadge>
 
 const Template: ComponentStory<typeof StatusBadge> = (args) => (
-  <div className="space-y-6">
-    <div className="p-4 space-y-4 rounded bg-slate-50">
-      <h2 className="text-lg font-bold">Light Mode</h2>
-      <StatusBadge {...args} />
-    </div>
-    <div className="p-4 space-y-4 rounded dark bg-slate-900">
-      <h2 className="text-lg font-bold text-white">Dark Mode</h2>
-      <StatusBadge {...args} />
-    </div>
-  </div>
+  <ColorSchemeContainer>
+    <StatusBadge {...args} />
+  </ColorSchemeContainer>
 )
 
 export const Paid = Template.bind({})

@@ -5,8 +5,26 @@
     @apply font-medium;
   }
   body {
-    @apply bg-slate-50 text-xs dark:bg-slate-900;
+    @apply text-xs bg-slate-50 dark:bg-slate-900;
   }
 }
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .surface-1-light {
+    --text-regular: hsl(231deg 23% 61%);
+    --text-strong: hsl(231deg 28% 7%);
+    @apply bg-slate-50;
+  }
+
+  .surface-1-dark {
+    --text-regular: hsl(231deg 75% 93%);
+    --text-strong: hsl(233deg 100% 100%);
+    @apply bg-slate-900;
+  }
+
+  .surface-1 {
+    @apply surface-1-light dark:surface-1-dark text-regular;
+  }
+}
