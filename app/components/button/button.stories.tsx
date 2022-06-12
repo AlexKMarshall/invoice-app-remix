@@ -29,3 +29,8 @@ export const Secondary = Template.bind({})
 Secondary.args = {
   color: 'secondary',
 }
+
+export const Monochrome = Template.bind({})
+Monochrome.args = {
+  color: 'monochrome',
+}
