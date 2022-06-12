@@ -33,17 +33,33 @@ export function InvoiceSummary({
     <article
       className={clsx(
         'flex cursor-pointer flex-col gap-6 rounded-md bg-white p-6 outline outline-2 outline-transparent',
-        'dark:bg-slate-800'
+        'dark:bg-slate-800',
+        'sm:flex-row sm:items-baseline'
       )}
     >
-      <div className="flex flex-wrap justify-between gap-x-6 gap-y-2">
+      <div
+        className={clsx(
+          'flex flex-wrap justify-between gap-x-6 gap-y-2',
+          'sm:contents'
+        )}
+      >
         <h2>
           <InvoiceId id={id} />
         </h2>
         <p>{name}</p>
       </div>
-      <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
-        <div className="space-y-2 justify-self-start">
+      <div
+        className={clsx(
+          'flex flex-wrap items-end justify-between gap-x-6 gap-y-2',
+          'sm:contents'
+        )}
+      >
+        <div
+          className={clsx(
+            'flex flex-col gap-2 justify-self-start',
+            'sm:contents'
+          )}
+        >
           <p>{dateFormatter.format(due)}</p>
           <p className="text-base font-bold text-strong">
             {currencyFormatter.format(amount)}
