@@ -3,6 +3,7 @@ import { StatusBadge } from '~/components/atoms/status-badge'
 import clsx from 'clsx'
 import type { MouseEventHandler, ReactNode, RefObject } from 'react'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
+import useClickUnlessDrag from '~/hooks/use-click-unless-drag'
 
 const dateFormatter = new Intl.DateTimeFormat(undefined, {
   day: '2-digit',
@@ -53,6 +54,8 @@ export function InvoiceSummary({
     anchorRef.current?.click()
   }
 
+  const invoiceClickProps = useClickUnlessDrag({ onClick: handleInvoiceClick })
+
   return (
     <article
       className={clsx(
@@ -61,7 +64,7 @@ export function InvoiceSummary({
         'focus-within:outline-violet-600 hover:outline-violet-600',
         'sm:flex-row sm:items-baseline'
       )}
-      onClick={handleInvoiceClick}
+      {...invoiceClickProps}
     >
       <div
         className={clsx(
