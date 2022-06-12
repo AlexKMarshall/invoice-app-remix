@@ -15,9 +15,7 @@ export default {
 } as ComponentMeta<typeof Button>
 
 const Template: ComponentStory<typeof Button> = (args) => (
-  <ColorSchemeContainer>
-    <Button {...args} />
-  </ColorSchemeContainer>
+  <ColorSchemeContainer lightMode={<Button {...args} />} />
 )
 
 export const Primary = Template.bind({})

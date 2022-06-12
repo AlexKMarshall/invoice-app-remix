@@ -10,8 +10,8 @@ module.exports = {
         sans: ["'Spartan'", ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        regular: 'var(--text-regular)',
-        strong: 'var(--text-strong)',
+        regular: 'hsl(var(--text-regular) / <alpha-value>)',
+        strong: 'hsl(var(--text-strong) / <alpha-value>)',
       },
     },
   },
