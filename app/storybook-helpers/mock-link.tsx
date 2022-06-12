@@ -5,7 +5,6 @@ import {
   useContext,
   useLayoutEffect,
   useRef,
-  useState,
 } from 'react'
 
 import type { Link as RemixLink } from '@remix-run/react'
@@ -33,7 +32,6 @@ export const LinkActionWrapper = ({
   onWouldNavigate,
   children,
 }: LinkActionWrapperProps) => {
-  const [state, setState] = useState<'loading' | 'ready'>('loading')
   const eventBoundaryRef = useRef<HTMLDivElement>(null)
 
   useLayoutEffect(() => {
@@ -46,7 +44,6 @@ export const LinkActionWrapper = ({
 
     if (eventBoundary) {
       eventBoundary.addEventListener('would-navigate', handleWouldNavigate)
-      setState('ready')
       return () => {
         eventBoundary.removeEventListener('would-navigate', handleWouldNavigate)
       }
@@ -55,9 +52,7 @@ export const LinkActionWrapper = ({
 
   return (
     <LinkActionContext.Provider value={{ eventBoundaryRef }}>
-      <div ref={eventBoundaryRef}>
-        {state === 'ready' ? children : <div>Loading&hellip;</div>}
-      </div>
+      <div ref={eventBoundaryRef}>{children}</div>
     </LinkActionContext.Provider>
   )
 }
