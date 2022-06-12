@@ -1,18 +1,18 @@
 import type { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import { ColorSchemeContainer } from '~/storybook-helpers/color-scheme-container'
-import { InvoiceId } from '.'
+import { InvoiceId as InvoiceIdComponent } from '.'
 
 export default {
   title: 'Atoms/InvoiceId',
-  component: InvoiceId,
-} as ComponentMeta<typeof InvoiceId>
+  component: InvoiceIdComponent,
+} as ComponentMeta<typeof InvoiceIdComponent>
 
-const Template: ComponentStory<typeof InvoiceId> = (args) => (
-  <ColorSchemeContainer lightMode={<InvoiceId {...args} />} />
+const Template: ComponentStory<typeof InvoiceIdComponent> = (args) => (
+  <ColorSchemeContainer lightMode={<InvoiceIdComponent {...args} />} />
 )
 
-export const Default = Template.bind({})
-Default.args = {
+export const InvoiceId = Template.bind({})
+InvoiceId.args = {
   id: 'rt3080',
 }
