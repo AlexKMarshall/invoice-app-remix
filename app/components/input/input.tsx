@@ -3,11 +3,11 @@ import type { Except, SetRequired } from 'type-fest'
 import type { InputHTMLAttributes } from 'react'
 import clsx from 'clsx'
 
-type Props = { label: string } & SetRequired<
-  Except<InputHTMLAttributes<HTMLInputElement>, 'className'>,
+type Props = { label: string; errorMessage?: string } & SetRequired<
+  Except<InputHTMLAttributes<HTMLInputElement>, 'className' | 'aria-invalid'>,
   'id'
 >
-export function Input({ label, ...props }: Props): JSX.Element {
+export function Input({ label, errorMessage, ...props }: Props): JSX.Element {
   return (
     <div
       className={clsx(
@@ -15,13 +15,23 @@ export function Input({ label, ...props }: Props): JSX.Element {
         props.readOnly ? 'opacity-50' : ''
       )}
     >
-      <label htmlFor={props.id}>{label}</label>
+      <div
+        className={clsx(
+          'flex flex-wrap justify-between gap-x-4 gap-y-2',
+          errorMessage ? 'text-red-600 dark:text-red-500' : ''
+        )}
+      >
+        <label htmlFor={props.id}>{label}</label>
+        <p aria-live="polite">{errorMessage}</p>
+      </div>
       <input
         {...props}
+        aria-invalid={Boolean(errorMessage)}
         className={clsx(
-          'rounded-sm bg-transparent px-5 py-4 font-bold text-strong caret-violet-600 outline outline-2 outline-regular/40',
+          'rounded-sm bg-gray-50 px-5 py-4 font-bold text-strong caret-violet-600 outline outline-2 outline-regular/40',
           'focus-visible:outline-violet-600',
-          'dark:bg-gray-800 dark:outline-transparent dark:focus-visible:outline-violet-600'
+          'dark:bg-gray-800 dark:outline-transparent dark:focus-visible:outline-violet-600',
+          'aria-invalid:outline-red-600 aria-invalid:dark:outline-red-500'
         )}
       />
     </div>

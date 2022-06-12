@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 const defaultTheme = require('tailwindcss/defaultTheme')
+const plugin = require('tailwindcss/plugin')
 
 module.exports = {
   content: ['./app/**/*.{ts,tsx,jsx,js}'],
@@ -15,5 +16,9 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(({ addVariant }) => {
+      addVariant('aria-invalid', `&[aria-invalid='true']`)
+    }),
+  ],
 }

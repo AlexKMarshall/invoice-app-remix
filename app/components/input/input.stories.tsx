@@ -21,9 +21,20 @@ const Template: ComponentStory<typeof Input> = ({ id, ...args }) => (
 )
 
 export const Default = Template.bind({})
+Default.parameters = {
+  chromatic: { viewports: [320, 1200] },
+}
 
-export const Empty = Template.bind({})
-Empty.args = { defaultValue: '' }
+export const WithErrorMessage = Template.bind({})
+WithErrorMessage.args = {
+  errorMessage: "Street address can't be empty",
+}
+WithErrorMessage.parameters = {
+  chromatic: { viewports: [320, 1200] },
+}
+
+export const WithPlaceholder = Template.bind({})
+WithPlaceholder.args = { defaultValue: '', placeholder: 'Your address here' }
 
 export const ReadOnly = Template.bind({})
 ReadOnly.args = { readOnly: true }
