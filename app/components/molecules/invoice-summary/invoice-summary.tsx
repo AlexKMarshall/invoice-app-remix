@@ -20,7 +20,7 @@ type Props = {
   amount: number
   currency: 'GBP'
   status: 'paid' | 'pending' | 'draft'
-  Link: typeof RemixLink
+  Link?: typeof RemixLink
 }
 export function InvoiceSummary({
   id,
