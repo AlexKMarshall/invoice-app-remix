@@ -94,7 +94,7 @@ export function InvoiceSummary({
             {currencyFormatter.format(amount)}
           </p>
         </div>
-        <div className="flex gap-5">
+        <div className="flex gap-5 basis-28 sm:basis-36">
           <StatusBadge status={status} />
           <ArrowRightIcon className="flex-none hidden w-2 text-violet-600 sm:inline" />
         </div>
