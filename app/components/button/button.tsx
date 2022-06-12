@@ -2,7 +2,7 @@ import type { ButtonHTMLAttributes } from 'react'
 import type { ClassValue } from 'clsx'
 import clsx from 'clsx'
 
-type Color = 'primary' | 'secondary' | 'monochrome'
+type Color = 'primary' | 'secondary' | 'monochrome' | 'danger'
 
 const colorClassNameMap: Record<Color, ClassValue> = {
   primary: clsx(
@@ -24,6 +24,11 @@ const colorClassNameMap: Record<Color, ClassValue> = {
     'focus-visible:outline-gray-900 focus-visible:bg-gray-900',
     'dark:hover:bg-gray-800',
     'dark:focus-visible:outline-gray-400 dark:focus-visible:bg-gray-800'
+  ),
+  danger: clsx(
+    'bg-red-600 text-white',
+    'hover:bg-red-400',
+    'focus-visible:bg-red-400 focus-visible:outline-red-400'
   ),
 }
 

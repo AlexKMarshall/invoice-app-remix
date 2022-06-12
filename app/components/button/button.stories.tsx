@@ -34,3 +34,8 @@ export const Monochrome = Template.bind({})
 Monochrome.args = {
   color: 'monochrome',
 }
+
+export const Danger = Template.bind({})
+Danger.args = {
+  color: 'danger',
+}
