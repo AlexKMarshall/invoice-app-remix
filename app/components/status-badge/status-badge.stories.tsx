@@ -9,9 +9,7 @@ export default {
 } as ComponentMeta<typeof StatusBadge>
 
 const Template: ComponentStory<typeof StatusBadge> = (args) => (
-  <ColorSchemeContainer>
-    <StatusBadge {...args} />
-  </ColorSchemeContainer>
+  <ColorSchemeContainer lightMode={<StatusBadge {...args} />} />
 )
 
 export const Paid = Template.bind({})

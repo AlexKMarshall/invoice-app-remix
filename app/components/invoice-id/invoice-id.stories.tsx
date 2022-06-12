@@ -9,9 +9,7 @@ export default {
 } as ComponentMeta<typeof InvoiceId>
 
 const Template: ComponentStory<typeof InvoiceId> = (args) => (
-  <ColorSchemeContainer>
-    <InvoiceId {...args} />
-  </ColorSchemeContainer>
+  <ColorSchemeContainer lightMode={<InvoiceId {...args} />} />
 )
 
 export const Default = Template.bind({})

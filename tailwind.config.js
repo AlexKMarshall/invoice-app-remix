@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 const defaultTheme = require('tailwindcss/defaultTheme')
+const plugin = require('tailwindcss/plugin')
 
 module.exports = {
   content: ['./app/**/*.{ts,tsx,jsx,js}'],
@@ -10,10 +11,14 @@ module.exports = {
         sans: ["'Spartan'", ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        regular: 'var(--text-regular)',
-        strong: 'var(--text-strong)',
+        regular: 'hsl(var(--text-regular) / <alpha-value>)',
+        strong: 'hsl(var(--text-strong) / <alpha-value>)',
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(({ addVariant }) => {
+      addVariant('aria-invalid', `&[aria-invalid]`)
+    }),
+  ],
 }
