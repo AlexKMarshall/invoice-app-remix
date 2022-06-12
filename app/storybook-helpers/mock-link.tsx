@@ -11,7 +11,7 @@ import type { Link as RemixLink } from '@remix-run/react'
 import type { To } from 'react-router'
 
 type LinkActionContextType = {
-  dispatchNavigateEvent: (to: To) => void
+  dispatchWouldNavigate: (to: To) => void
 }
 const LinkActionContext = createContext<LinkActionContextType | undefined>(
   undefined
@@ -25,17 +25,17 @@ const useLinkActionContext = () => {
   return context
 }
 
-class NavigateEvent extends CustomEvent<To> {
-  static type: 'would-navigate'
+const wouldNavigate = 'would-navigate'
+class WouldNavigateEvent extends CustomEvent<To> {
   public to: To
   constructor(to: To) {
-    super(NavigateEvent.type, { detail: to })
+    super(wouldNavigate, { detail: to })
     this.to = to
   }
 }
 
 type LinkActionWrapperProps = {
-  onWouldNavigate?: (event: NavigateEvent) => void
+  onWouldNavigate?: (event: WouldNavigateEvent) => void
   children: ReactNode
 }
 export const LinkActionWrapper = ({
@@ -44,31 +44,28 @@ export const LinkActionWrapper = ({
 }: LinkActionWrapperProps) => {
   const eventBoundaryRef = useRef<HTMLDivElement>(null)
 
-  const dispatchNavigateEvent = (to: To) => {
-    eventBoundaryRef.current?.dispatchEvent(new NavigateEvent(to))
+  const dispatchWouldNavigate = (to: To) => {
+    eventBoundaryRef.current?.dispatchEvent(new WouldNavigateEvent(to))
   }
 
   useLayoutEffect(() => {
     const eventBoundary = eventBoundaryRef.current
     const handleWouldNavigate = (event: Event) => {
-      if (event instanceof NavigateEvent) {
+      if (event instanceof WouldNavigateEvent) {
         onWouldNavigate?.(event)
       }
     }
 
     if (eventBoundary) {
-      eventBoundary.addEventListener(NavigateEvent.type, handleWouldNavigate)
+      eventBoundary.addEventListener(wouldNavigate, handleWouldNavigate)
       return () => {
-        eventBoundary.removeEventListener(
-          NavigateEvent.type,
-          handleWouldNavigate
-        )
+        eventBoundary.removeEventListener(wouldNavigate, handleWouldNavigate)
       }
     }
   }, [onWouldNavigate])
 
   return (
-    <LinkActionContext.Provider value={{ dispatchNavigateEvent }}>
+    <LinkActionContext.Provider value={{ dispatchWouldNavigate }}>
       <div ref={eventBoundaryRef}>{children}</div>
     </LinkActionContext.Provider>
   )
@@ -76,13 +73,13 @@ export const LinkActionWrapper = ({
 
 export const StorybookMockLink: typeof RemixLink = forwardRef(
   function StorybookMockLink({ children, to, ...props }, ref) {
-    const { dispatchNavigateEvent } = useLinkActionContext()
+    const { dispatchWouldNavigate } = useLinkActionContext()
 
     const handleStorybookLinkClick: MouseEventHandler<HTMLAnchorElement> = (
       event
     ) => {
       event.preventDefault()
-      dispatchNavigateEvent(to)
+      dispatchWouldNavigate(to)
       props.onClick?.(event)
     }
 
