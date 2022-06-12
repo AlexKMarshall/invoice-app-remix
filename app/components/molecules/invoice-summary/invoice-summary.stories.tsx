@@ -1,18 +1,27 @@
-import type { ComponentMeta, ComponentStory } from '@storybook/react'
+import { InvoiceSummary, LinkActionWrapper } from '.'
+import type { Meta, Story } from '@storybook/react'
 
 import { ColorSchemeContainer } from '~/storybook-helpers/color-scheme-container'
-import { InvoiceSummary } from '.'
+import type { ComponentProps } from 'react'
+
+type StoryArgs = ComponentProps<typeof InvoiceSummary> &
+  ComponentProps<typeof LinkActionWrapper>
 
 export default {
   title: 'Molecules/InvoiceSummary',
   component: InvoiceSummary,
+  argTypes: {
+    onWouldNavigate: { action: true },
+  },
   parameters: {
     chromatic: { viewports: [320, 420, 850, 1200] },
   },
-} as ComponentMeta<typeof InvoiceSummary>
+} as Meta<StoryArgs>
 
-const Template: ComponentStory<typeof InvoiceSummary> = (args) => (
-  <ColorSchemeContainer lightMode={<InvoiceSummary {...args} />} />
+const Template: Story<StoryArgs> = ({ onWouldNavigate, ...args }) => (
+  <LinkActionWrapper onWouldNavigate={onWouldNavigate}>
+    <ColorSchemeContainer lightMode={<InvoiceSummary {...args} />} />
+  </LinkActionWrapper>
 )
 
 export const Default = Template.bind({})
