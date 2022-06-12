@@ -1,6 +1,7 @@
 import { InvoiceSummary } from '~/components/molecules/invoice-summary'
 import type { InvoiceSummary as InvoiceSummaryType } from '~/models/invoice.server'
 import { Link as RemixLink } from '@remix-run/react'
+import clsx from 'clsx'
 
 type Props = {
   invoices: InvoiceSummaryType[]
@@ -9,9 +10,11 @@ type Props = {
 export function Invoices({ invoices, Link = RemixLink }: Props): JSX.Element {
   const invoiceCount = invoices.length
   return (
-    <div className="space-y-8">
+    <div className={clsx('space-y-8', 'sm:space-y-14 lg:space-y-16')}>
       <div className="space-y-1">
-        <h1 className="text-xl font-bold text-strong">Invoices</h1>
+        <h1 className={clsx('text-xl font-bold text-strong', 'sm:text-3xl')}>
+          Invoices
+        </h1>
         <p>There are {invoiceCount} total invoices</p>
       </div>
       <ul className="space-y-4">
