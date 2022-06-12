@@ -11,6 +11,10 @@ module.exports = {
         sans: ["'Spartan'", ...defaultTheme.fontFamily.sans],
       },
       colors: {
+        surface: {
+          DEFAULT: 'hsl(var(--surface) / <alpha-value>)',
+          alt: 'hsl(var(--surface-alt) / <alpha-value>)',
+        },
         regular: 'hsl(var(--text-regular) / <alpha-value>)',
         strong: 'hsl(var(--text-strong) / <alpha-value>)',
       },
