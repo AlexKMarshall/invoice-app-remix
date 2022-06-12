@@ -3,7 +3,7 @@ import {
   createContext,
   forwardRef,
   useContext,
-  useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from 'react'
@@ -36,7 +36,7 @@ export const LinkActionWrapper = ({
   const [state, setState] = useState<'loading' | 'ready'>('loading')
   const eventBoundaryRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const eventBoundary = eventBoundaryRef.current
     const handleWouldNavigate = (e: Event) => {
       if (e instanceof CustomEvent) {

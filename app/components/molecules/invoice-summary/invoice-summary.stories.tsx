@@ -44,8 +44,8 @@ Default.args = {
 }
 Default.play = async ({ args, canvasElement }) => {
   const test = async (mode: 'light-mode' | 'dark-mode') => {
-    const canvas = within(await within(canvasElement).findByTestId(mode))
-    const link = await canvas.findByRole('link', { name: args.id })
+    const canvas = within(within(canvasElement).getByTestId(mode))
+    const link = canvas.getByRole('link', { name: args.id })
 
     // click the link directly
     await userEvent.click(link)
