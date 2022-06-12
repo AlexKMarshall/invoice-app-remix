@@ -1,0 +1,12 @@
+@tailwind base;
+
+@layer base {
+  html {
+    @apply font-medium;
+  }
+  body {
+    @apply bg-slate-50 text-xs dark:bg-slate-900;
+  }
+}
+@tailwind components;
+@tailwind utilities;
