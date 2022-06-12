@@ -30,10 +30,10 @@ export const Filled = Template.bind({})
 Filled.parameters = {
   chromatic: { viewports: [320, 1200] },
 }
-Filled.play = async ({ canvasElement }) => {
+Filled.play = async ({ args, canvasElement }) => {
   const test = async (mode: 'light-mode' | 'dark-mode') => {
     const canvas = within(within(canvasElement).getByTestId(mode))
-    const input = canvas.getByRole('textbox', { name: /street address/i })
+    const input = canvas.getByRole('textbox', { name: args.label })
 
     await userEvent.type(input, '234 High Street')
 
@@ -51,15 +51,15 @@ WithErrorMessage.args = {
 WithErrorMessage.parameters = {
   chromatic: { viewports: [320, 1200] },
 }
-WithErrorMessage.play = async ({ canvasElement }) => {
+WithErrorMessage.play = async ({ args, canvasElement }) => {
   const test = async (mode: 'light-mode' | 'dark-mode') => {
     const canvas = within(within(canvasElement).getByTestId(mode))
-    const input = canvas.getByRole('textbox', { name: /street address/i })
+    const input = canvas.getByRole('textbox', { name: args.label })
 
     // @ts-ignore
     await expect(input).toBeInvalid()
     // @ts-ignore
-    await expect(input).toHaveErrorMessage(WithErrorMessage.args?.errorMessage)
+    await expect(input).toHaveErrorMessage(args.errorMessage)
   }
 
   await test('light-mode')

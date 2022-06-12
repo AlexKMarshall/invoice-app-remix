@@ -33,6 +33,8 @@ export function InvoiceSummary({
 
   const href = `/invoices/${id}`
 
+  const anchorRef = useRef<HTMLAnchorElement>(null)
+
   const { eventBoundaryRef } = useLinkActionContext()
 
   const handleStorybookLinkClick: MouseEventHandler<HTMLAnchorElement> = (
@@ -44,6 +46,13 @@ export function InvoiceSummary({
     )
   }
 
+  const handleInvoiceClick: MouseEventHandler<HTMLDivElement> = (event) => {
+    const clickedOnAnchor =
+      event.target instanceof Node && anchorRef.current?.contains(event.target)
+    if (clickedOnAnchor) return
+    anchorRef.current?.click()
+  }
+
   return (
     <article
       className={clsx(
@@ -52,6 +61,7 @@ export function InvoiceSummary({
         'focus-within:outline-violet-600 hover:outline-violet-600',
         'sm:flex-row sm:items-baseline'
       )}
+      onClick={handleInvoiceClick}
     >
       <div
         className={clsx(
@@ -60,7 +70,12 @@ export function InvoiceSummary({
         )}
       >
         <h2 className="sm:-order-2">
-          <a href={href} onClick={handleStorybookLinkClick}>
+          <a
+            href={href}
+            onClick={handleStorybookLinkClick}
+            className="focus:outline-none"
+            ref={anchorRef}
+          >
             <InvoiceId id={id} />
           </a>
         </h2>
