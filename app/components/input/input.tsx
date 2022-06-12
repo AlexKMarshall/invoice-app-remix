@@ -4,10 +4,14 @@ import type { InputHTMLAttributes } from 'react'
 import clsx from 'clsx'
 
 type Props = { label: string; errorMessage?: string } & SetRequired<
-  Except<InputHTMLAttributes<HTMLInputElement>, 'className' | 'aria-invalid'>,
+  Except<
+    InputHTMLAttributes<HTMLInputElement>,
+    'className' | 'aria-invalid' | 'aria-errormessage'
+  >,
   'id'
 >
 export function Input({ label, errorMessage, ...props }: Props): JSX.Element {
+  const errorMessageId = `${props.id}-error`
   return (
     <div
       className={clsx(
@@ -22,11 +26,14 @@ export function Input({ label, errorMessage, ...props }: Props): JSX.Element {
         )}
       >
         <label htmlFor={props.id}>{label}</label>
-        <p aria-live="polite">{errorMessage}</p>
+        <p id={errorMessageId} aria-live="polite">
+          {errorMessage}
+        </p>
       </div>
       <input
         {...props}
         aria-invalid={Boolean(errorMessage)}
+        aria-errorMessage={errorMessageId}
         className={clsx(
           'rounded-sm bg-gray-50 px-5 py-4 font-bold text-strong caret-violet-600 outline outline-2 outline-regular/40',
           'focus-visible:outline-violet-600',
