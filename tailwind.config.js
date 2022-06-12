@@ -25,4 +25,7 @@ module.exports = {
       addVariant('aria-invalid', `&[aria-invalid]`)
     }),
   ],
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
 }
