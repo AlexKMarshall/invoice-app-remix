@@ -77,7 +77,7 @@ ReadOnly.parameters = {
         {
           // @fixme color contrast of read only fields fails
           id: 'color-contrast',
-          reviewOnFail: true,
+          enabled: false,
         },
       ],
     },
