@@ -1,6 +1,6 @@
-import clsx from 'clsx'
 import { InvoiceId } from '~/components/atoms/invoice-id'
 import { StatusBadge } from '~/components/atoms/status-badge'
+import clsx from 'clsx'
 
 const dateFormatter = new Intl.DateTimeFormat(undefined, {
   day: '2-digit',
@@ -43,10 +43,10 @@ export function InvoiceSummary({
           'sm:contents'
         )}
       >
-        <h2>
+        <h2 className="sm:-order-2">
           <InvoiceId id={id} />
         </h2>
-        <p>{name}</p>
+        <p className="sm:grow">{name}</p>
       </div>
       <div
         className={clsx(
@@ -60,8 +60,13 @@ export function InvoiceSummary({
             'sm:contents'
           )}
         >
-          <p>{dateFormatter.format(due)}</p>
-          <p className="text-base font-bold text-strong">
+          <p className="sm:-order-1">{dateFormatter.format(due)}</p>
+          <p
+            className={clsx(
+              'text-base font-bold text-strong',
+              'sm:grow sm:text-end'
+            )}
+          >
             {currencyFormatter.format(amount)}
           </p>
         </div>
