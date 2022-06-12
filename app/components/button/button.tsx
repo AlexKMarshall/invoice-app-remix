@@ -1,5 +1,6 @@
 import type { ButtonHTMLAttributes } from 'react'
 import type { ClassValue } from 'clsx'
+import type { Except } from 'type-fest'
 import clsx from 'clsx'
 
 type Color = 'primary' | 'secondary' | 'monochrome' | 'danger'
@@ -32,7 +33,7 @@ const colorClassNameMap: Record<Color, ClassValue> = {
   ),
 }
 
-type Props = { color?: Color } & Omit<
+type Props = { color?: Color } & Except<
   ButtonHTMLAttributes<HTMLButtonElement>,
   'className'
 >

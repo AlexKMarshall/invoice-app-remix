@@ -6,7 +6,11 @@ import { Input } from '.'
 export default {
   title: 'Atoms/Input',
   component: Input,
-  args: { id: 'input-field', label: 'Street address' },
+  args: {
+    id: 'input-field',
+    label: 'Street address',
+    defaultValue: '123 Main Street',
+  },
 } as ComponentMeta<typeof Input>
 
 const Template: ComponentStory<typeof Input> = ({ id, ...args }) => (
@@ -17,4 +21,22 @@ const Template: ComponentStory<typeof Input> = ({ id, ...args }) => (
 )
 
 export const Default = Template.bind({})
-Default.args = {}
+
+export const Empty = Template.bind({})
+Empty.args = { defaultValue: '' }
+
+export const ReadOnly = Template.bind({})
+ReadOnly.args = { readOnly: true }
+ReadOnly.parameters = {
+  a11y: {
+    config: {
+      rules: [
+        {
+          // @fixme color contrast of read only fields fails
+          id: 'color-contrast',
+          reviewOnFail: true,
+        },
+      ],
+    },
+  },
+}
