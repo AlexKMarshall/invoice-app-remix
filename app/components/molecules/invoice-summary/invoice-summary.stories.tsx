@@ -47,11 +47,13 @@ Default.play = async ({ args, canvasElement }) => {
     const canvas = within(within(canvasElement).getByTestId(mode))
     const link = canvas.getByRole('link', { name: args.id })
 
+    const expectedNavigateTo = `/invoices/${args.id}`
+
     // click the link directly
     await userEvent.click(link)
     await expect(args.onWouldNavigate).toHaveBeenCalledTimes(1)
     await expect(args.onWouldNavigate).toHaveBeenCalledWith(
-      `/invoices/${args.id}`
+      expect.objectContaining({ to: expectedNavigateTo })
     )
 
     // click somehwere else on the invoice
@@ -59,7 +61,7 @@ Default.play = async ({ args, canvasElement }) => {
     await userEvent.click(name)
     await expect(args.onWouldNavigate).toHaveBeenCalledTimes(2)
     await expect(args.onWouldNavigate).toHaveBeenLastCalledWith(
-      `/invoices/${args.id}`
+      expect.objectContaining({ to: expectedNavigateTo })
     )
   }
 
