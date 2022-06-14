@@ -1,5 +1,6 @@
 import { InvoiceId } from '~/components/atoms/invoice-id'
 import { StatusBadge } from '~/components/atoms/status-badge'
+import { ArrowRightIcon } from '~/components/atoms/icons'
 import clsx from 'clsx'
 import type { MouseEventHandler } from 'react'
 import { useRef } from 'react'
@@ -51,10 +52,10 @@ export function InvoiceSummary({
   return (
     <article
       className={clsx(
-        'flex cursor-pointer flex-col gap-6 rounded-md bg-white p-6 outline outline-2 outline-transparent',
+        'flex max-w-screen-md cursor-pointer flex-col gap-6 rounded-md bg-white p-6 outline outline-2 outline-transparent',
         'dark:bg-slate-800',
         'focus-within:outline-violet-600 hover:outline-violet-600',
-        'sm:flex-row sm:items-baseline'
+        'sm:flex-row sm:items-baseline sm:gap-10 sm:py-4'
       )}
       {...invoiceClickProps}
     >
@@ -93,7 +94,10 @@ export function InvoiceSummary({
             {currencyFormatter.format(amount)}
           </p>
         </div>
-        <StatusBadge status={status} />
+        <div className="flex gap-5 basis-28 sm:basis-36">
+          <StatusBadge status={status} />
+          <ArrowRightIcon className="flex-none hidden w-2 text-violet-600 sm:inline" />
+        </div>
       </div>
     </article>
   )
