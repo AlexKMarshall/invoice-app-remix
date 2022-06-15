@@ -79,6 +79,70 @@ jobs:
       - name: ⚡ Run vitest
         run: npm run test -- --coverage
 
+  chromatic:
+    name: 🎨 Chromatic
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛑 Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: 📥 Download deps
+        uses: bahmutov/npm-install@v1
+
+      - name: ⚙️ Build
+        run: npm run build
+
+      - name: 🎨 Publish to Chromatic
+        uses: chromaui/action@v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+
+  storybook:
+    name: 🧪 Storybook tests
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛑 Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: 📥 Download deps
+        uses: bahmutov/npm-install@v1
+
+      - name: ⚙️ Build
+        run: npm run build
+
+      - name: 🎭 Install Playwright
+        run: npx playwright install --with-deps
+
+      - name: 📖 Build Storybook
+        run: yarn build-storybook --quiet
+
+      - name: 🍽️ Serve Storybook and run tests
+        run: |
+          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "npx http-server storybook-static --port 6006 --silent" \
+            "npx wait-on tcp:6006 && yarn test-storybook"
+
   cypress:
     name: ⚫️ Cypress
     runs-on: ubuntu-latest
@@ -112,9 +176,9 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           start: npm run start:mocks
-          wait-on: "http://localhost:8811"
+          wait-on: 'http://localhost:8811'
         env:
-          PORT: "8811"
+          PORT: '8811'
 
   build:
     name: 🐳 Build
@@ -132,8 +196,8 @@ jobs:
         uses: SebRollen/toml-action@v1.0.0
         id: app_name
         with:
-          file: "fly.toml"
-          field: "app"
+          file: 'fly.toml'
+          field: 'app'
 
       - name: 🐳 Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -193,14 +257,14 @@ jobs:
         uses: SebRollen/toml-action@v1.0.0
         id: app_name
         with:
-          file: "fly.toml"
-          field: "app"
+          file: 'fly.toml'
+          field: 'app'
 
       - name: 🚀 Deploy Staging
         if: ${{ github.ref == 'refs/heads/dev' }}
         uses: superfly/flyctl-actions@1.3
         with:
-          args: "deploy --app ${{ steps.app_name.outputs.value }}-staging --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}"
+          args: 'deploy --app ${{ steps.app_name.outputs.value }}-staging --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}'
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
@@ -208,6 +272,6 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' }}
         uses: superfly/flyctl-actions@1.3
         with:
-          args: "deploy --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}"
+          args: 'deploy --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}'
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

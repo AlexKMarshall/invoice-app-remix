@@ -1,0 +1,47 @@
+@tailwind base;
+
+@layer base {
+  html {
+    --touch-target-finger: 44px;
+    --touch-target-mouse: 0px;
+  }
+  body {
+    @apply text-xs font-medium surface-1 bg-slate-50 dark:bg-slate-900;
+  }
+}
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .surface-1-light {
+    --surface: 210deg 20% 98%;
+    --surface-alt: 231deg 73% 93%;
+    --text-regular: 231deg 28% 48%;
+    --text-strong: 231deg 28% 7%;
+    @apply bg-gray-50;
+  }
+
+  .surface-1-dark {
+    --surface: 221deg 39% 11%;
+    --surface-alt: 233deg 31% 17%;
+    --text-regular: 231deg 75% 93%;
+    --text-strong: 233deg 100% 100%;
+    @apply bg-gray-900;
+  }
+
+  .surface-1 {
+    @apply surface-1-light dark:surface-1-dark text-regular;
+  }
+
+  .touch-target {
+    --touch-target: var(--touch-target-finger);
+    min-width: var(--touch-target);
+    min-height: var(--touch-target);
+  }
+
+  @media (pointer: fine) {
+    .touch-target {
+      --touch-target: var(--touch-target-mouse);
+    }
+  }
+}
