@@ -55,7 +55,7 @@ export function InvoiceSummary({
         'flex max-w-screen-md cursor-pointer flex-col gap-6 rounded-md bg-white p-6 shadow-md shadow-slate-400/10 outline outline-2 outline-transparent',
         'dark:bg-slate-800',
         'focus-within:outline-violet-600 hover:outline-violet-600',
-        'sm:flex-row sm:items-baseline sm:gap-10 sm:py-4'
+        'sm:grid sm:grid-cols-[9%_12%_1fr_1fr_20%] sm:items-baseline sm:gap-10 sm:py-4'
       )}
       {...invoiceClickProps}
     >
