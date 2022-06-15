@@ -1,11 +1,12 @@
-import { InvoiceId } from '~/components/atoms/invoice-id'
-import { StatusBadge } from '~/components/atoms/status-badge'
 import { ArrowRightIcon } from '~/components/atoms/icons'
-import clsx from 'clsx'
+import { InvoiceId } from '~/components/atoms/invoice-id'
+import type { InvoiceListItem as InvoiceListItemType } from '~/models/invoice.server'
 import type { MouseEventHandler } from 'react'
-import { useRef } from 'react'
-import useClickUnlessDrag from '~/hooks/use-click-unless-drag'
 import { Link as RemixLink } from '@remix-run/react'
+import { StatusBadge } from '~/components/atoms/status-badge'
+import clsx from 'clsx'
+import useClickUnlessDrag from '~/hooks/use-click-unless-drag'
+import { useRef } from 'react'
 
 const dateFormatter = new Intl.DateTimeFormat(undefined, {
   day: '2-digit',
@@ -13,20 +14,14 @@ const dateFormatter = new Intl.DateTimeFormat(undefined, {
   year: 'numeric',
 })
 
-type Props = {
-  id: string
-  name: string
-  due: Date
-  amount: number
-  currency: 'GBP'
-  status: 'paid' | 'pending' | 'draft'
+type Props = InvoiceListItemType & {
   Link?: typeof RemixLink
 }
-export function InvoiceSummary({
+export function InvoiceListItem({
   id,
-  name,
+  customerName,
   due,
-  amount,
+  totalAmount,
   currency,
   status,
   Link = RemixLink,
@@ -70,7 +65,7 @@ export function InvoiceSummary({
             <InvoiceId id={id} />
           </Link>
         </h2>
-        <p className="sm:grow">{name}</p>
+        <p className="sm:grow">{customerName}</p>
       </div>
       <div
         className={clsx(
@@ -91,7 +86,7 @@ export function InvoiceSummary({
               'sm:grow sm:text-end'
             )}
           >
-            {currencyFormatter.format(amount)}
+            {currencyFormatter.format(totalAmount)}
           </p>
         </div>
         <div className="flex gap-5 basis-28 sm:basis-36">

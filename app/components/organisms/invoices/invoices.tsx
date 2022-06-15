@@ -1,10 +1,10 @@
-import { InvoiceSummary } from '~/components/molecules/invoice-summary'
-import type { InvoiceSummary as InvoiceSummaryType } from '~/models/invoice.server'
+import { InvoiceListItem } from '~/components/molecules/invoice-list-item'
+import type { InvoiceListItem as InvoiceListItemType } from '~/models/invoice.server'
 import { Link as RemixLink } from '@remix-run/react'
 import clsx from 'clsx'
 
 type Props = {
-  invoices: InvoiceSummaryType[]
+  invoices: InvoiceListItemType[]
   Link?: typeof RemixLink
 }
 export function Invoices({ invoices, Link = RemixLink }: Props): JSX.Element {
@@ -20,7 +20,7 @@ export function Invoices({ invoices, Link = RemixLink }: Props): JSX.Element {
       <ul className="space-y-4">
         {invoices.map((invoice) => (
           <li key={invoice.id}>
-            <InvoiceSummary {...invoice} Link={Link} />
+            <InvoiceListItem {...invoice} Link={Link} />
           </li>
         ))}
       </ul>

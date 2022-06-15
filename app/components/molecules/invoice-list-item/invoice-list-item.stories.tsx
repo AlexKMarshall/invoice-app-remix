@@ -7,15 +7,15 @@ import { userEvent, within } from '@storybook/testing-library'
 
 import { ColorSchemeContainer } from '~/storybook-helpers/color-scheme-container'
 import type { ComponentProps } from 'react'
-import { InvoiceSummary } from '.'
+import { InvoiceListItem } from '.'
 import { expect } from '@storybook/jest'
 
-type StoryArgs = ComponentProps<typeof InvoiceSummary> &
+type StoryArgs = ComponentProps<typeof InvoiceListItem> &
   ComponentProps<typeof LinkActionWrapper>
 
 export default {
-  title: 'Molecules/InvoiceSummary',
-  component: InvoiceSummary,
+  title: 'Molecules/InvoiceListItem',
+  component: InvoiceListItem,
   argTypes: {
     onWouldNavigate: { action: true },
   },
@@ -29,16 +29,16 @@ export default {
 
 const Template: Story<StoryArgs> = ({ onWouldNavigate, ...args }) => (
   <LinkActionWrapper onWouldNavigate={onWouldNavigate}>
-    <ColorSchemeContainer lightMode={<InvoiceSummary {...args} />} />
+    <ColorSchemeContainer lightMode={<InvoiceListItem {...args} />} />
   </LinkActionWrapper>
 )
 
 export const Default = Template.bind({})
 Default.args = {
   id: 'rt3080',
-  name: 'Jensen Huang',
+  customerName: 'Jensen Huang',
   due: new Date('19 Aug 2021'),
-  amount: 1800.9,
+  totalAmount: 1800.9,
   currency: 'GBP',
   status: 'paid',
 }
@@ -57,7 +57,7 @@ Default.play = async ({ args, canvasElement }) => {
     )
 
     // click somehwere else on the invoice
-    const name = await canvas.getByText(args.name)
+    const name = await canvas.getByText(args.customerName)
     await userEvent.click(name)
     await expect(args.onWouldNavigate).toHaveBeenCalledTimes(2)
     await expect(args.onWouldNavigate).toHaveBeenLastCalledWith(
@@ -71,9 +71,9 @@ Default.play = async ({ args, canvasElement }) => {
 export const LongContent = Template.bind({})
 LongContent.args = {
   id: 'ax1083',
-  name: 'Someone With A Very Long Name',
+  customerName: 'Someone With A Very Long Name',
   due: new Date('30 Sep 2022'),
-  amount: 1_234_567.89,
+  totalAmount: 1_234_567.89,
   currency: 'GBP',
   status: 'pending',
 }
