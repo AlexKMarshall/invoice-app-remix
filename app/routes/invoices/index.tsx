@@ -1,5 +1,9 @@
 import type { InvoiceListItem } from '~/models/invoice.server'
 import { Invoices } from '~/components/organisms/invoices'
+import type { LoaderFunction } from '@remix-run/node'
+import { getInvoiceListItems } from '~/models/invoice.server'
+import { json } from '@remix-run/node'
+import { useLoaderData } from '@remix-run/react'
 
 const invoices: InvoiceListItem[] = [
   {
@@ -36,6 +40,17 @@ const invoices: InvoiceListItem[] = [
   },
 ]
 
+type LoaderData = {
+  invoiceListItems: InvoiceListItem[]
+}
+
+export const loader: LoaderFunction = async () => {
+  const invoiceListItems = await getInvoiceListItems()
+  return json<LoaderData>({ invoiceListItems })
+}
+
 export default function InvoicesIndexPage() {
+  const loaderData = useLoaderData()
+
   return <Invoices invoices={invoices} />
 }
