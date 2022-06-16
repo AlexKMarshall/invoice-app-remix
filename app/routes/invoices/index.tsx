@@ -1,56 +1,65 @@
+import { json, useLoaderData } from 'remix-utils'
+
 import type { InvoiceListItem } from '~/models/invoice.server'
 import { Invoices } from '~/components/organisms/invoices'
 import type { LoaderFunction } from '@remix-run/node'
 import { getInvoiceListItems } from '~/models/invoice.server'
-import { json } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
-
-const invoices: InvoiceListItem[] = [
-  {
-    id: 'rt3080',
-    customerName: 'Jensen Huang',
-    due: new Date('19 Aug 2021'),
-    totalAmount: 1800.9,
-    currency: 'GBP',
-    status: 'paid',
-  },
-  {
-    id: 'xm9141',
-    customerName: 'Alex Grim',
-    due: new Date('20 Sep 2021'),
-    totalAmount: 556,
-    currency: 'GBP',
-    status: 'pending',
-  },
-  {
-    id: 'rg0314',
-    customerName: 'Alex Grim',
-    due: new Date('01 Oct 2021'),
-    totalAmount: 14002.33,
-    currency: 'GBP',
-    status: 'paid',
-  },
-  {
-    id: 'uv2353',
-    customerName: 'Anita Wainwright',
-    due: new Date('12 Nov 2021'),
-    totalAmount: 3102.04,
-    currency: 'GBP',
-    status: 'draft',
-  },
-]
+import { parseJSON } from 'date-fns'
+import { z } from 'zod'
 
 type LoaderData = {
   invoiceListItems: InvoiceListItem[]
 }
 
+type SerializedDate = { __type: 'date'; dateValue: string }
+const serializeDate = (date: Date): SerializedDate => ({
+  __type: 'date',
+  dateValue: date.toJSON(),
+})
+
+function replacer(this: any, key: string, value: unknown) {
+  const unserializedValue: unknown = this[key]
+  if (unserializedValue instanceof Date) {
+    return serializeDate(unserializedValue)
+  }
+  return value
+}
+
+function isSerializedDate(
+  serializedValue: SerializedDate | object
+): serializedValue is SerializedDate {
+  return (serializedValue as SerializedDate).__type === 'date'
+}
+
+const reviver = (key: string, value: unknown) => {
+  if (typeof value !== 'object' || value === null) return value
+  if (isSerializedDate(value)) {
+    return parseJSON(value.dateValue)
+  }
+  return value
+}
+
 export const loader: LoaderFunction = async () => {
   const invoiceListItems = await getInvoiceListItems()
-  return json<LoaderData>({ invoiceListItems })
+  return json<LoaderData>({ invoiceListItems }, { replacer })
 }
 
 export default function InvoicesIndexPage() {
-  const loaderData = useLoaderData()
+  const { invoiceListItems } = useLoaderData({
+    reviver,
+    validator: z.object({
+      invoiceListItems: z.array(
+        z.object({
+          id: z.string(),
+          due: z.date(),
+          customerName: z.string(),
+          totalAmount: z.number(),
+          currency: z.enum(['GBP']),
+          status: z.enum(['paid', 'pending', 'draft']),
+        })
+      ),
+    }).parse,
+  })
 
-  return <Invoices invoices={invoices} />
+  return <Invoices invoices={invoiceListItems} />
 }
