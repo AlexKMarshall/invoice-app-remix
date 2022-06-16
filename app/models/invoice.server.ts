@@ -1,41 +1,37 @@
 import { Decimal } from '@prisma/client/runtime'
-import type { IterableElement } from 'type-fest'
+import type { InvoiceListItem } from './invoice.validator'
+import { invoiceListItemSchema } from './invoice.validator'
 import { prisma } from '~/db.server'
 import { z } from 'zod'
 
-export function getInvoiceListItems() {
-  return z
-    .promise(
-      z.array(
-        z.object({
-          id: z.string(),
-          due: z.date(),
-          customerName: z.string(),
-          totalAmount: z
-            .instanceof(Decimal)
-            .transform((value) => value.toNumber()),
-          currency: z.enum(['GBP']),
-          status: z.enum(['paid', 'pending', 'draft']),
-        })
-      )
-    )
-    .parse(
-      prisma.invoice.findMany({
-        select: {
-          id: true,
-          due: true,
-          customerName: true,
-          totalAmount: true,
-          currency: true,
-          status: true,
-        },
-        orderBy: {
-          due: 'desc',
-        },
-      })
-    )
+function schemaForInputType<T>() {
+  return <S extends z.ZodType<any, any, T>>(arg: S) => arg
 }
 
-export type InvoiceListItem = IterableElement<
-  Awaited<ReturnType<typeof getInvoiceListItems>>
->
+export async function getInvoiceListItems(): Promise<InvoiceListItem[]> {
+  const queryResult = await prisma.invoice.findMany({
+    select: {
+      id: true,
+      due: true,
+      customerName: true,
+      totalAmount: true,
+      currency: true,
+      status: true,
+    },
+    orderBy: {
+      due: 'desc',
+    },
+  })
+
+  const schema = schemaForInputType<typeof queryResult>()(
+    z.array(
+      invoiceListItemSchema.omit({ totalAmount: true }).extend({
+        totalAmount: z
+          .instanceof(Decimal)
+          .transform((value) => value.toNumber()),
+      })
+    )
+  )
+
+  return schema.parse(queryResult)
+}

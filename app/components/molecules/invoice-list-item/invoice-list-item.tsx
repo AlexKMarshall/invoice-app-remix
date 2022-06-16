@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from '~/components/atoms/icons'
 import { InvoiceId } from '~/components/atoms/invoice-id'
-import type { InvoiceListItem as InvoiceListItemType } from '~/models/invoice.server'
+import type { InvoiceListItem as InvoiceListItemType } from '~/models/invoice.validator'
 import type { MouseEventHandler } from 'react'
 import { Link as RemixLink } from '@remix-run/react'
 import { StatusBadge } from '~/components/atoms/status-badge'

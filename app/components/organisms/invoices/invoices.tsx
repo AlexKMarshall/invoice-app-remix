@@ -1,5 +1,5 @@
 import { InvoiceListItem } from '~/components/molecules/invoice-list-item'
-import type { InvoiceListItem as InvoiceListItemType } from '~/models/invoice.server'
+import type { InvoiceListItem as InvoiceListItemType } from '~/models/invoice.validator'
 import { Link as RemixLink } from '@remix-run/react'
 import clsx from 'clsx'
 

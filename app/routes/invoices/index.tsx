@@ -1,9 +1,10 @@
 import { json, useLoaderData } from 'remix-utils'
 
-import type { InvoiceListItem } from '~/models/invoice.server'
+import type { InvoiceListItem } from '~/models/invoice.validator'
 import { Invoices } from '~/components/organisms/invoices'
 import type { LoaderFunction } from '@remix-run/node'
 import { getInvoiceListItems } from '~/models/invoice.server'
+import { invoiceListItemSchema } from '~/models/invoice.validator'
 import { parseJSON } from 'date-fns'
 import { z } from 'zod'
 
@@ -44,21 +45,21 @@ export const loader: LoaderFunction = async () => {
   return json<LoaderData>({ invoiceListItems }, { replacer })
 }
 
+function schemaForInputType<T>() {
+  return <S extends z.ZodType<any, any, T>>(arg: S) => arg
+}
+
+const validator = (data: unknown): LoaderData => {
+  const schema = schemaForInputType<LoaderData>()(
+    z.object({ invoiceListItems: z.array(invoiceListItemSchema) })
+  )
+  return schema.parse(data)
+}
+
 export default function InvoicesIndexPage() {
   const { invoiceListItems } = useLoaderData({
     reviver,
-    validator: z.object({
-      invoiceListItems: z.array(
-        z.object({
-          id: z.string(),
-          due: z.date(),
-          customerName: z.string(),
-          totalAmount: z.number(),
-          currency: z.enum(['GBP']),
-          status: z.enum(['paid', 'pending', 'draft']),
-        })
-      ),
-    }).parse,
+    validator,
   })
 
   return <Invoices invoiceListItems={invoiceListItems} />
