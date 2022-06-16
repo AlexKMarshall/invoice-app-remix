@@ -33,7 +33,7 @@ const Template: Story<StoryArgs> = ({ onWouldNavigate, ...args }) => (
 
 export const Default = Template.bind({})
 Default.args = {
-  invoices: [
+  invoiceListItems: [
     {
       id: 'rt3080',
       customerName: 'Jensen Huang',

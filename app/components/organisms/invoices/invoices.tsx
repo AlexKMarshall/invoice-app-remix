@@ -4,11 +4,14 @@ import { Link as RemixLink } from '@remix-run/react'
 import clsx from 'clsx'
 
 type Props = {
-  invoices: InvoiceListItemType[]
+  invoiceListItems: InvoiceListItemType[]
   Link?: typeof RemixLink
 }
-export function Invoices({ invoices, Link = RemixLink }: Props): JSX.Element {
-  const invoiceCount = invoices.length
+export function Invoices({
+  invoiceListItems,
+  Link = RemixLink,
+}: Props): JSX.Element {
+  const invoiceCount = invoiceListItems.length
   return (
     <div className={clsx('space-y-8', 'sm:space-y-14 lg:space-y-16')}>
       <div className="space-y-1">
@@ -18,7 +21,7 @@ export function Invoices({ invoices, Link = RemixLink }: Props): JSX.Element {
         <p>There are {invoiceCount} total invoices</p>
       </div>
       <ul className="space-y-4">
-        {invoices.map((invoice) => (
+        {invoiceListItems.map((invoice) => (
           <li key={invoice.id}>
             <InvoiceListItem {...invoice} Link={Link} />
           </li>

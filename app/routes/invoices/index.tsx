@@ -61,5 +61,5 @@ export default function InvoicesIndexPage() {
     }).parse,
   })
 
-  return <Invoices invoices={invoiceListItems} />
+  return <Invoices invoiceListItems={invoiceListItems} />
 }
