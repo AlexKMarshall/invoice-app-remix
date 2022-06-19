@@ -18,7 +18,13 @@ const Template: ComponentStory<typeof HeaderComponent> = (args) => (
     lightMode={
       <div className="flex flex-col lg:flex-row">
         <HeaderComponent {...args} />
-        <main className="flex-grow" />
+        <div className="flex-grow" />
+      </div>
+    }
+    darkMode={
+      <div className="flex flex-col lg:flex-row">
+        <HeaderComponent {...args} as="div" />
+        <div className="flex-grow" />
       </div>
     }
   />

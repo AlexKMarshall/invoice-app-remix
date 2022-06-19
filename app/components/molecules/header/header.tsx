@@ -1,9 +1,17 @@
 import clsx from 'clsx'
+import type { AllHTMLAttributes } from 'react'
+import type { Except } from 'type-fest'
 
-type Props = {}
-export function Header(props: Props): JSX.Element {
+type Props = Except<AllHTMLAttributes<HTMLDivElement>, 'className'> & {
+  as?: 'header' | 'div'
+}
+export function Header({
+  as: AsComponent = 'header',
+  ...props
+}: Props): JSX.Element {
   return (
-    <header
+    <AsComponent
+      {...props}
       className={clsx(
         'flex flex-none justify-start overflow-hidden',
         'bg-gray-700 dark:bg-gray-800',
@@ -29,6 +37,6 @@ export function Header(props: Props): JSX.Element {
           />
         </svg>
       </div>
-    </header>
+    </AsComponent>
   )
 }
