@@ -1,7 +1,7 @@
 import { json, useLoaderData } from 'remix-utils'
 
 import type { InvoiceListItem } from '~/models/invoice.validator'
-import { Invoices } from '~/components/organisms/invoices'
+import { Invoices } from '~/components/screens/invoices'
 import type { LoaderFunction } from '@remix-run/node'
 import { getInvoiceListItems } from '~/models/invoice.server'
 import { invoiceListItemSchema } from '~/models/invoice.validator'

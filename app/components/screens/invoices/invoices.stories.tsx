@@ -12,7 +12,7 @@ type StoryArgs = ComponentProps<typeof Invoices> &
   ComponentProps<typeof LinkActionWrapper>
 
 export default {
-  title: 'Organisms/Invoices',
+  title: 'Screens/Invoices',
   component: Invoices,
   argTypes: {
     onWouldNavigate: { action: true },

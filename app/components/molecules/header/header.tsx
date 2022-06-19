@@ -5,14 +5,14 @@ export function Header(props: Props): JSX.Element {
   return (
     <header
       className={clsx(
-        'flex justify-start overflow-hidden',
+        'flex flex-none justify-start overflow-hidden',
         'bg-gray-700 dark:bg-gray-800',
-        'lg:rounded-r-3xl'
+        'lg:flex-col lg:rounded-r-3xl'
       )}
     >
       <div
         className={clsx(
-          'relative z-10 overflow-hidden rounded-r-3xl bg-violet-600 p-6 text-white',
+          'relative z-10 flex-none overflow-hidden rounded-r-3xl bg-violet-600 p-6 text-white',
           'before:absolute before:inset-0 before:-z-10 before:translate-y-[50%] before:rounded-tl-3xl before:bg-violet-500',
           'lg:p-8'
         )}
