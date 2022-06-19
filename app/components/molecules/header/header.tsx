@@ -4,18 +4,23 @@ type Props = {}
 export function Header(props: Props): JSX.Element {
   return (
     <header
-      className={clsx('flex justify-start', 'bg-gray-700 dark:bg-gray-800')}
+      className={clsx(
+        'flex justify-start overflow-hidden',
+        'bg-gray-700 dark:bg-gray-800',
+        'lg:rounded-r-3xl'
+      )}
     >
       <div
         className={clsx(
           'relative z-10 overflow-hidden rounded-r-3xl bg-violet-600 p-6 text-white',
-          'before:absolute before:inset-0 before:-z-10 before:translate-y-[50%] before:rounded-tl-3xl before:bg-violet-500'
+          'before:absolute before:inset-0 before:-z-10 before:translate-y-[50%] before:rounded-tl-3xl before:bg-violet-500',
+          'lg:p-8'
         )}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 28 26"
-          className="w-7"
+          className="w-7 sm:w-8 lg:w-10"
         >
           <path
             fill="currentColor"

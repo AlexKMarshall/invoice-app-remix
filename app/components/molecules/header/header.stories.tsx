@@ -14,7 +14,12 @@ export default {
 const Template: ComponentStory<typeof HeaderComponent> = (args) => (
   <ColorSchemeContainer
     layout="fullwidth"
-    lightMode={<HeaderComponent {...args} />}
+    lightMode={
+      <div className="flex flex-col lg:flex-row">
+        <HeaderComponent {...args} />
+        <main className="flex-grow" />
+      </div>
+    }
   />
 )
 
