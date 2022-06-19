@@ -8,6 +8,7 @@ export default {
   component: HeaderComponent,
   parameters: {
     layout: 'fullscreen',
+    chromatic: { viewports: [320, 850, 1200] },
   },
 } as ComponentMeta<typeof HeaderComponent>
 
