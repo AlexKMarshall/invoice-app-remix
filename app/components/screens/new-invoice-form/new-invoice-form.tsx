@@ -2,6 +2,7 @@ import { Form as RemixForm, Link as RemixLink } from '@remix-run/react'
 
 import { Button } from '~/components/atoms/button'
 import { Input } from '~/components/atoms/input'
+import { useState } from 'react'
 
 type Props = {
   Link?: typeof RemixLink
@@ -11,6 +12,8 @@ export function NewInvoiceForm({
   Link = RemixLink,
   Form = RemixForm,
 }: Props): JSX.Element {
+  const [status, setStatus] = useState<'draft' | 'pending'>('draft')
+
   return (
     <Form>
       <h2>Bill From</h2>
@@ -33,6 +36,7 @@ export function NewInvoiceForm({
       <Input label="Item Name" name="itemName" />
       <Input label="Qty." name="itemQuantity" />
       <Input label="Price" name="itemPrice" />
+      <input type="hidden" name="status" value={status} />
       <Button
         color="secondary"
         as={Link}
@@ -41,10 +45,18 @@ export function NewInvoiceForm({
       >
         Discard
       </Button>
-      <Button color="monochrome" type="submit" name="status" value="draft">
+      <Button
+        color="monochrome"
+        type="submit"
+        onClick={() => setStatus('draft')}
+      >
         Save as Draft
       </Button>
-      <Button color="primary" type="submit" name="status" value="pending">
+      <Button
+        color="primary"
+        type="submit"
+        onClick={() => setStatus('pending')}
+      >
         Save &amp; Send
       </Button>
     </Form>
