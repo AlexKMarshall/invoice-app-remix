@@ -20,7 +20,7 @@ type Props = InvoiceListItemType & {
 export function InvoiceListItem({
   id,
   clientName,
-  due,
+  dueAt,
   totalAmount,
   currency,
   status,
@@ -79,7 +79,7 @@ export function InvoiceListItem({
             'sm:contents'
           )}
         >
-          <p className="sm:-order-1">{dateFormatter.format(due)}</p>
+          <p className="sm:-order-1">{dateFormatter.format(dueAt)}</p>
           <p
             className={clsx(
               'text-base font-bold text-strong',

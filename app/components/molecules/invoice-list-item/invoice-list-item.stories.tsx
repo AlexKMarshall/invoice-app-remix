@@ -37,7 +37,7 @@ export const Default = Template.bind({})
 Default.args = {
   id: 'rt3080',
   clientName: 'Jensen Huang',
-  due: new Date('19 Aug 2021'),
+  dueAt: new Date('19 Aug 2021'),
   totalAmount: 1800.9,
   currency: 'GBP',
   status: 'paid',
@@ -72,7 +72,7 @@ export const LongContent = Template.bind({})
 LongContent.args = {
   id: 'ax1083',
   clientName: 'Someone With A Very Long Name',
-  due: new Date('30 Sep 2022'),
+  dueAt: new Date('30 Sep 2022'),
   totalAmount: 1_234_567.89,
   currency: 'GBP',
   status: 'pending',

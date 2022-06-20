@@ -9,7 +9,6 @@ const createNewInvoice = () =>
     data: {
       id: faker.datatype.string(6),
       customerName: faker.name.findName(),
-      due: faker.date.soon(),
       totalAmount: faker.finance.amount(),
       currency: 'GBP',
       status: faker.helpers.arrayElement(['draft', 'pending', 'paid']),
