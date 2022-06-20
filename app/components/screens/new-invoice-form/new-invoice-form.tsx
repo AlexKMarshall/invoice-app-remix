@@ -1,8 +1,8 @@
 import { Form as RemixForm, Link as RemixLink } from '@remix-run/react'
+import { useId, useState } from 'react'
 
 import { Button } from '~/components/atoms/button'
 import { Input } from '~/components/atoms/input'
-import { useState } from 'react'
 
 type Props = {
   Link?: typeof RemixLink
@@ -13,20 +13,27 @@ export function NewInvoiceForm({
   Form = RemixForm,
 }: Props): JSX.Element {
   const [status, setStatus] = useState<'draft' | 'pending'>('draft')
+  const billFromId = useId()
+  const billToId = useId()
 
   return (
     <Form>
-      <h2>Bill From</h2>
-      <Input label="Street Address" name="fromStreetAddress" />
-      <Input label="City" name="fromCity" />
-      <Input label="Post Code" name="fromPostCode" />
-      <Input label="Country" name="fromCountry" />
-      <h2>Bill To</h2>
-      <Input label="Client's Name" name="clientName" />
-      <Input label="Street Address" name="toStreetAddress" />
-      <Input label="City" name="toCity" />
-      <Input label="Post Code" name="toPostCode" />
-      <Input label="Country" name="toCountry" />
+      <h2 id={billFromId}>Bill From</h2>
+      <fieldset aria-labelledby={billFromId}>
+        <Input label="Street Address" name="fromStreetAddress" />
+        <Input label="City" name="fromCity" />
+        <Input label="Post Code" name="fromPostCode" />
+        <Input label="Country" name="fromCountry" />
+      </fieldset>
+      <h2 id={billToId}>Bill To</h2>
+      <fieldset aria-labelledby={billToId}>
+        <Input label="Client's Name" name="clientName" />
+        <Input label="Client's Email" name="clientName" type="email" />
+        <Input label="Street Address" name="toStreetAddress" />
+        <Input label="City" name="toCity" />
+        <Input label="Post Code" name="toPostCode" />
+        <Input label="Country" name="toCountry" />
+      </fieldset>
 
       <Input label="Invoice Date" name="invoiceDate" type="date" />
       <Input label="Payment Terms" name="paymentTerms" />
@@ -34,7 +41,7 @@ export function NewInvoiceForm({
 
       <h2>Item list</h2>
       <Input label="Item Name" name="itemName" />
-      <Input label="Qty." name="itemQuantity" />
+      <Input label="Qty." name="itemQuantity" aria-label="Quantity" />
       <Input label="Price" name="itemPrice" />
       <input type="hidden" name="status" value={status} />
       <Button
