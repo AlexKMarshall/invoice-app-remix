@@ -37,7 +37,7 @@ Default.args = {
   items: [
     {
       id: 'rt3080',
-      customerName: 'Jensen Huang',
+      clientName: 'Jensen Huang',
       due: new Date('19 Aug 2021'),
       totalAmount: 1800.9,
       currency: 'GBP',
@@ -45,7 +45,7 @@ Default.args = {
     },
     {
       id: 'xm9141',
-      customerName: 'Alex Grim',
+      clientName: 'Alex Grim',
       due: new Date('20 Sep 2021'),
       totalAmount: 556,
       currency: 'GBP',
@@ -53,7 +53,7 @@ Default.args = {
     },
     {
       id: 'rg0314',
-      customerName: 'Alex Grim',
+      clientName: 'Alex Grim',
       due: new Date('01 Oct 2021'),
       totalAmount: 14002.33,
       currency: 'GBP',
@@ -61,7 +61,7 @@ Default.args = {
     },
     {
       id: 'uv2353',
-      customerName: 'Anita Wainwright',
+      clientName: 'Anita Wainwright',
       due: new Date('12 Nov 2021'),
       totalAmount: 3102.04,
       currency: 'GBP',

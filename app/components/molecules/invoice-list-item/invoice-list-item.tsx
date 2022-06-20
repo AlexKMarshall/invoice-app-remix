@@ -19,7 +19,7 @@ type Props = InvoiceListItemType & {
 }
 export function InvoiceListItem({
   id,
-  customerName,
+  clientName,
   due,
   totalAmount,
   currency,
@@ -65,7 +65,7 @@ export function InvoiceListItem({
             <InvoiceId id={id} />
           </Link>
         </h2>
-        <p className="sm:grow">{customerName}</p>
+        <p className="sm:grow">{clientName}</p>
       </div>
       <div
         className={clsx(

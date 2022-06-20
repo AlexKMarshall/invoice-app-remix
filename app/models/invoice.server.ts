@@ -13,7 +13,9 @@ export async function getInvoiceListItems(): Promise<InvoiceListItem[]> {
     select: {
       id: true,
       due: true,
-      customerName: true,
+      client: {
+        select: { name: true },
+      },
       totalAmount: true,
       currency: true,
       status: true,
@@ -25,13 +27,19 @@ export async function getInvoiceListItems(): Promise<InvoiceListItem[]> {
 
   const schema = schemaForInputType<typeof queryResult>()(
     z.array(
-      invoiceListItemSchema.omit({ totalAmount: true }).extend({
-        totalAmount: z
-          .instanceof(Decimal)
-          .transform((value) => value.toNumber()),
-      })
+      invoiceListItemSchema
+        .omit({ totalAmount: true, customerName: true })
+        .extend({
+          totalAmount: z
+            .instanceof(Decimal)
+            .transform((value) => value.toNumber()),
+          client: z.object({ name: z.string() }),
+        })
     )
   )
 
-  return schema.parse(queryResult)
+  return schema.parse(queryResult).map(({ client, ...invoice }) => ({
+    ...invoice,
+    clientName: client.name,
+  }))
 }

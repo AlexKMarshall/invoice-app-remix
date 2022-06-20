@@ -36,7 +36,7 @@ const Template: Story<StoryArgs> = ({ onWouldNavigate, ...args }) => (
 export const Default = Template.bind({})
 Default.args = {
   id: 'rt3080',
-  customerName: 'Jensen Huang',
+  clientName: 'Jensen Huang',
   due: new Date('19 Aug 2021'),
   totalAmount: 1800.9,
   currency: 'GBP',
@@ -57,7 +57,7 @@ Default.play = async ({ args, canvasElement }) => {
     )
 
     // click somehwere else on the invoice
-    const name = await canvas.getByText(args.customerName)
+    const name = await canvas.getByText(args.clientName)
     await userEvent.click(name)
     await expect(args.onWouldNavigate).toHaveBeenCalledTimes(2)
     await expect(args.onWouldNavigate).toHaveBeenLastCalledWith(
@@ -71,7 +71,7 @@ Default.play = async ({ args, canvasElement }) => {
 export const LongContent = Template.bind({})
 LongContent.args = {
   id: 'ax1083',
-  customerName: 'Someone With A Very Long Name',
+  clientName: 'Someone With A Very Long Name',
   due: new Date('30 Sep 2022'),
   totalAmount: 1_234_567.89,
   currency: 'GBP',
