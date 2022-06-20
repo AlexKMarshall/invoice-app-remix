@@ -18,9 +18,14 @@ export async function getInvoiceListItems(): Promise<InvoiceListItem[]> {
       client: {
         select: { name: true },
       },
-      totalAmount: true,
       currency: true,
       status: true,
+      lineItem: {
+        select: {
+          quantity: true,
+          price: true,
+        },
+      },
     },
     orderBy: {
       issuedAt: 'desc',
@@ -32,12 +37,13 @@ export async function getInvoiceListItems(): Promise<InvoiceListItem[]> {
       invoiceListItemSchema
         .omit({ totalAmount: true, customerName: true, due: true })
         .extend({
-          totalAmount: z
-            .instanceof(Decimal)
-            .transform((value) => value.toNumber()),
           client: z.object({ name: z.string() }),
           issuedAt: z.date(),
           paymentTerms: z.number(),
+          lineItem: z.object({
+            quantity: z.number(),
+            price: z.instanceof(Decimal),
+          }),
         })
     )
   )
@@ -50,10 +56,11 @@ export async function getInvoiceListItems(): Promise<InvoiceListItem[]> {
   // should be
   return schema
     .parse(queryResult)
-    .map(({ client, issuedAt, paymentTerms, ...invoice }) => ({
+    .map(({ client, issuedAt, paymentTerms, lineItem, ...invoice }) => ({
       ...invoice,
       clientName: client.name,
       dueAt: addBusinessDays(issuedAt, paymentTerms),
+      totalAmount: lineItem.price.mul(lineItem.quantity).toNumber(),
     }))
     .sort((a, b) => a.dueAt.valueOf() - b.dueAt.valueOf())
 }

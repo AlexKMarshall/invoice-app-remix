@@ -40,7 +40,6 @@ model Note {
 model Invoice {
   internalId         String   @id @default(cuid())
   id                 String   @unique()
-  totalAmount        Decimal
   currency           String
   status             String
   address            Address? @relation(fields: [addressId], references: [id])
