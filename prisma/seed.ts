@@ -8,7 +8,6 @@ const createNewInvoice = () =>
   prisma.invoice.create({
     data: {
       id: faker.datatype.string(6),
-      customerName: faker.name.findName(),
       totalAmount: faker.finance.amount(),
       currency: 'GBP',
       status: faker.helpers.arrayElement(['draft', 'pending', 'paid']),

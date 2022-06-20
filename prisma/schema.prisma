@@ -40,7 +40,6 @@ model Note {
 model Invoice {
   internalId         String   @id @default(cuid())
   id                 String   @unique()
-  customerName       String
   totalAmount        Decimal
   currency           String
   status             String
