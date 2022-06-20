@@ -38,11 +38,47 @@ model Note {
 }
 
 model Invoice {
-  internalId   String   @id @default(cuid())
-  id           String   @unique()
-  due          DateTime
-  customerName String
-  totalAmount  Decimal
-  currency     String
-  status       String
+  internalId         String   @id @default(cuid())
+  id                 String   @unique()
+  due                DateTime
+  customerName       String
+  totalAmount        Decimal
+  currency           String
+  status             String
+  address            Address? @relation(fields: [addressId], references: [id])
+  addressId          String?
+  client             Client   @relation(fields: [clientId], references: [id])
+  clientId           String
+  paymentTerms       String?
+  projectDescription String?
+  lineItem           LineItem @relation(fields: [lineItemId], references: [id])
+  lineItemId         String
+  issuedAt           DateTime
+}
+
+model Address {
+  id       String    @id @default(cuid())
+  lineOne  String?
+  city     String?
+  postcode String?
+  country  String?
+  Invoice  Invoice[]
+  Client   Client[]
+}
+
+model Client {
+  id        String    @id @default(cuid())
+  name      String?
+  email     String
+  address   Address?  @relation(fields: [addressId], references: [id])
+  addressId String?
+  Invoice   Invoice[]
+}
+
+model LineItem {
+  id       String    @id @default(cuid())
+  name     String?
+  quantity Int?
+  price    Decimal?
+  Invoice  Invoice[]
 }
