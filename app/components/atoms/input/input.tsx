@@ -3,7 +3,11 @@ import type { InputHTMLAttributes } from 'react'
 import clsx from 'clsx'
 import { useId } from 'react'
 
-type Props = { label: string; errorMessage?: string } & Except<
+type Props = {
+  label: string
+  errorMessage?: string
+  colSpan?: ResponsiveColSpan
+} & Except<
   InputHTMLAttributes<HTMLInputElement>,
   'className' | 'aria-invalid' | 'aria-errormessage'
 >
@@ -11,6 +15,7 @@ export function Input({
   label,
   errorMessage,
   id,
+  colSpan,
   ...props
 }: Props): JSX.Element {
   const generatedId = useId()
@@ -20,7 +25,8 @@ export function Input({
     <div
       className={clsx(
         'flex flex-col gap-2',
-        props.disabled ? 'opacity-50' : ''
+        props.disabled ? 'opacity-50' : '',
+        colSpan
       )}
     >
       <div
@@ -49,3 +55,22 @@ export function Input({
     </div>
   )
 }
+
+type ColSpan =
+  | 'col-span-1'
+  | 'col-span-2'
+  | 'col-span-3'
+  | 'col-span-4'
+  | 'col-span-5'
+  | 'col-span-6'
+  | 'col-span-7'
+  | 'col-span-8'
+  | 'col-span-9'
+  | 'col-span-10'
+  | 'col-span-11'
+  | 'col-span-12'
+  | 'col-span-full'
+
+type BreakPoint = '' | 'sm:' | 'md:' | 'lg:'
+
+type ResponsiveColSpan = `${BreakPoint}${ColSpan}`
