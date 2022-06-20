@@ -1,13 +1,18 @@
+import { Form as RemixForm, Link as RemixLink } from '@remix-run/react'
+
 import { Button } from '~/components/atoms/button'
 import { Input } from '~/components/atoms/input'
-import { Link as RemixLink } from '@remix-run/react'
 
 type Props = {
   Link?: typeof RemixLink
+  Form?: typeof RemixForm
 }
-export function NewInvoiceForm({ Link = RemixLink }: Props): JSX.Element {
+export function NewInvoiceForm({
+  Link = RemixLink,
+  Form = RemixForm,
+}: Props): JSX.Element {
   return (
-    <form>
+    <Form>
       <h2>Bill From</h2>
       <Input label="Street Address" name="fromStreetAddress" />
       <Input label="City" name="fromCity" />
@@ -42,6 +47,6 @@ export function NewInvoiceForm({ Link = RemixLink }: Props): JSX.Element {
       <Button color="primary" type="submit" name="status" value="pending">
         Save &amp; Send
       </Button>
-    </form>
+    </Form>
   )
 }
