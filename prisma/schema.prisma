@@ -49,7 +49,7 @@ model Invoice {
   addressId          String?
   client             Client   @relation(fields: [clientId], references: [id])
   clientId           String
-  paymentTerms       String?
+  paymentTerms       Int      @default(1)
   projectDescription String?
   lineItem           LineItem @relation(fields: [lineItemId], references: [id])
   lineItemId         String
