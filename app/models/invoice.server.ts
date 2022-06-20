@@ -35,7 +35,7 @@ export async function getInvoiceListItems(): Promise<InvoiceListItem[]> {
   const schema = schemaForInputType<typeof queryResult>()(
     z.array(
       invoiceListItemSchema
-        .omit({ totalAmount: true, customerName: true, due: true })
+        .omit({ totalAmount: true, clientName: true, dueAt: true })
         .extend({
           client: z.object({ name: z.string() }),
           issuedAt: z.date(),
