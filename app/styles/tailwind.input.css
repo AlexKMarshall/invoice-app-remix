@@ -20,6 +20,7 @@
   .surface-1-light {
     --surface: 210deg 20% 98%;
     --surface-alt: 231deg 73% 93%;
+    --text-muted: 225deg 14% 48%;
     --text-regular: 231deg 28% 48%;
     --text-strong: 231deg 28% 7%;
     @apply bg-gray-50;
@@ -28,6 +29,7 @@
   .surface-1-dark {
     --surface: 221deg 39% 11%;
     --surface-alt: 233deg 31% 17%;
+    --text-muted: 225deg 14% 56%;
     --text-regular: 231deg 75% 93%;
     --text-strong: 233deg 100% 100%;
     @apply bg-gray-900;
