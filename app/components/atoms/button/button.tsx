@@ -15,6 +15,8 @@ type BaseProps<C extends ButtonOrLink> = {
 
   children: ReactNode
   color?: Color
+  px?: Responsive<SpaceProperty<'px'>>
+  mr?: Responsive<MarginProperty<'mr'>>
 }
 
 type Props<C extends ButtonOrLink> = BaseProps<C> &
@@ -23,6 +25,8 @@ type Props<C extends ButtonOrLink> = BaseProps<C> &
 export function Button<C extends ButtonOrLink = 'button'>({
   as,
   color = 'primary',
+  px = 'px-6',
+  mr,
   ...props
 }: Props<C>): JSX.Element {
   const Component = as || 'button'
@@ -31,10 +35,12 @@ export function Button<C extends ButtonOrLink = 'button'>({
     <Component
       {...props}
       className={clsx(
-        'rounded-full py-4 px-6 font-bold outline outline-transparent',
+        'inline-grid place-content-center rounded-full py-4 font-bold outline outline-transparent',
         'focus-visible:outline-2 focus-visible:outline-offset-4',
         'active:brightness-90',
-        colorClassNameMap[color]
+        colorClassNameMap[color],
+        px,
+        mr
       )}
     />
   )
@@ -67,3 +73,17 @@ const colorClassNameMap: Record<Color, ClassValue> = {
     'focus-visible:bg-red-400 focus-visible:outline-red-400'
   ),
 }
+
+type BreakPoint = '' | 'sm:' | 'md:' | 'lg:'
+
+type Responsive<T extends string> = `${BreakPoint}${T}`
+
+const spaceScale = [
+  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 20, 24, 28, 32, 36, 40, 44,
+  48, 52, 56, 60, 64, 72, 80, 96,
+] as const
+type SpaceValue = typeof spaceScale[number]
+type SpaceProperty<Property extends string> = `${Property}-${SpaceValue}`
+type MarginProperty<Property extends string> = `${Property}-${
+  | SpaceValue
+  | 'auto'}`
