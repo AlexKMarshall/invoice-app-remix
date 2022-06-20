@@ -62,5 +62,5 @@ export async function getInvoiceListItems(): Promise<InvoiceListItem[]> {
       dueAt: addBusinessDays(issuedAt, paymentTerms),
       totalAmount: lineItem.price.mul(lineItem.quantity).toNumber(),
     }))
-    .sort((a, b) => a.dueAt.valueOf() - b.dueAt.valueOf())
+    .sort((a, b) => b.dueAt.valueOf() - a.dueAt.valueOf())
 }
