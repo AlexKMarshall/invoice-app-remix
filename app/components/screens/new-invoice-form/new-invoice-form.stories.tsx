@@ -53,26 +53,23 @@ Empty.args = {}
 export const Completed = Template.bind({})
 Completed.play = async ({ args, canvasElement }) => {
   const form = {
-    billFrom: {
-      street: '19 Union Terrace',
-      city: 'London',
-      postcode: 'E1 3EZ',
-      country: 'United Kingdom',
-    },
-    billTo: {
-      clientName: 'Alex Grim',
-      clientEmail: 'alexgrim@mail.com',
-      street: '23 Lincoln Square',
-      city: 'Bradford',
-      postcode: 'BD1 9PB',
-      country: 'United Kingdom',
-    },
+    fromStreetAddress: '19 Union Terrace',
+    fromCity: 'London',
+    fromPostCode: 'E1 3EZ',
+    fromCountry: 'United Kingdom',
+    clientName: 'Alex Grim',
+    clientEmail: 'alexgrim@mail.com',
+    toStreetAddress: '23 Lincoln Square',
+    toCity: 'Bradford',
+    toPostCode: 'BD1 9PB',
+    toCountry: 'United Kingdom',
     invoiceDate: '2021-08-21',
     paymentTerms: 'Net 30 Days',
     projectDescription: 'Graphic Design',
     itemName: 'Banner Design',
     quantity: '1',
     price: '156.00',
+    status: 'draft',
   }
   const test = async (mode: 'light-mode' | 'dark-mode') => {
     const canvas = within(within(canvasElement).getByTestId(mode))
@@ -82,19 +79,19 @@ Completed.play = async ({ args, canvasElement }) => {
     )
     await userEvent.type(
       billFromFieldset.getByLabelText(/street address/i),
-      form.billFrom.street
+      form.fromStreetAddress
     )
     await userEvent.type(
       billFromFieldset.getByLabelText(/city/i),
-      form.billFrom.city
+      form.fromCity
     )
     await userEvent.type(
       billFromFieldset.getByLabelText(/post code/i),
-      form.billFrom.postcode
+      form.fromPostCode
     )
     await userEvent.type(
       billFromFieldset.getByLabelText(/country/i),
-      form.billFrom.country
+      form.fromCountry
     )
 
     const billToFieldset = within(
@@ -102,27 +99,24 @@ Completed.play = async ({ args, canvasElement }) => {
     )
     await userEvent.type(
       billToFieldset.getByLabelText(/client's name/i),
-      form.billTo.clientName
+      form.clientName
     )
     await userEvent.type(
       billToFieldset.getByLabelText(/client's email/i),
-      form.billTo.clientEmail
+      form.clientEmail
     )
     await userEvent.type(
       billToFieldset.getByLabelText(/street address/i),
-      form.billTo.street
+      form.toStreetAddress
     )
-    await userEvent.type(
-      billToFieldset.getByLabelText(/city/i),
-      form.billTo.city
-    )
+    await userEvent.type(billToFieldset.getByLabelText(/city/i), form.toCity)
     await userEvent.type(
       billToFieldset.getByLabelText(/post code/i),
-      form.billTo.postcode
+      form.toPostCode
     )
     await userEvent.type(
       billToFieldset.getByLabelText(/country/i),
-      form.billTo.country
+      form.toCountry
     )
 
     await userEvent.type(
@@ -146,15 +140,13 @@ Completed.play = async ({ args, canvasElement }) => {
       canvas.getByRole('button', { name: /save as draft/i })
     )
 
-    await expect(args.onWouldSubmit).toHaveBeenLastCalledWith(
-      expect.objectContaining({
-        payload: expect.objectContaining({
-          unwrappedData: expect.objectContaining({
-            projectDescription: form.projectDescription,
-          }),
-        }),
-      })
-    )
+    // @ts-ignore
+    const lastCalledFormData = args.onWouldSubmit.mock.lastCall[0].payload
+      .formData as FormData
+
+    await expect(
+      Object.fromEntries(lastCalledFormData.entries())
+    ).toMatchObject(form)
   }
 
   await test('light-mode')

@@ -28,7 +28,7 @@ export function NewInvoiceForm({
       <h2 id={billToId}>Bill To</h2>
       <fieldset aria-labelledby={billToId}>
         <Input label="Client's Name" name="clientName" />
-        <Input label="Client's Email" name="clientName" type="email" />
+        <Input label="Client's Email" name="clientEmail" type="email" />
         <Input label="Street Address" name="toStreetAddress" />
         <Input label="City" name="toCity" />
         <Input label="Post Code" name="toPostCode" />
@@ -41,8 +41,8 @@ export function NewInvoiceForm({
 
       <h2>Item list</h2>
       <Input label="Item Name" name="itemName" />
-      <Input label="Qty." name="itemQuantity" aria-label="Quantity" />
-      <Input label="Price" name="itemPrice" />
+      <Input label="Qty." name="quantity" aria-label="Quantity" />
+      <Input label="Price" name="price" />
       <input type="hidden" name="status" value={status} />
       <Button
         color="secondary"
