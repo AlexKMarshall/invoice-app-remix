@@ -9,7 +9,6 @@ export default {
   title: 'Atoms/Input',
   component: Input,
   args: {
-    id: 'input-field',
     label: 'Street address',
     placeholder: 'Your address here',
   },
@@ -20,10 +19,7 @@ export default {
 } as ComponentMeta<typeof Input>
 
 const Template: ComponentStory<typeof Input> = ({ id, ...args }) => (
-  <ColorSchemeContainer
-    lightMode={<Input id={`${id}-light`} {...args} />}
-    darkMode={<Input id={`${id}-dark`} {...args} />}
-  />
+  <ColorSchemeContainer lightMode={<Input {...args} />} />
 )
 
 export const Filled = Template.bind({})

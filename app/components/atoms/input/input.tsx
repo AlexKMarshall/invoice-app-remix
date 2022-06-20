@@ -1,17 +1,21 @@
-import type { Except, SetRequired } from 'type-fest'
-
+import type { Except } from 'type-fest'
 import type { InputHTMLAttributes } from 'react'
 import clsx from 'clsx'
+import { useId } from 'react'
 
-type Props = { label: string; errorMessage?: string } & SetRequired<
-  Except<
-    InputHTMLAttributes<HTMLInputElement>,
-    'className' | 'aria-invalid' | 'aria-errormessage'
-  >,
-  'id'
+type Props = { label: string; errorMessage?: string } & Except<
+  InputHTMLAttributes<HTMLInputElement>,
+  'className' | 'aria-invalid' | 'aria-errormessage'
 >
-export function Input({ label, errorMessage, ...props }: Props): JSX.Element {
-  const errorMessageId = `${props.id}-error`
+export function Input({
+  label,
+  errorMessage,
+  id,
+  ...props
+}: Props): JSX.Element {
+  const generatedId = useId()
+  const inputId = id ?? generatedId
+  const errorMessageId = `${inputId}-error`
   return (
     <div
       className={clsx(
@@ -25,13 +29,14 @@ export function Input({ label, errorMessage, ...props }: Props): JSX.Element {
           errorMessage ? 'text-red-600 dark:text-red-500' : ''
         )}
       >
-        <label htmlFor={props.id}>{label}</label>
+        <label htmlFor={inputId}>{label}</label>
         <p id={errorMessageId} aria-live="polite">
           {errorMessage}
         </p>
       </div>
       <input
         {...props}
+        id={inputId}
         aria-invalid={errorMessage ? true : undefined}
         aria-errormessage={errorMessageId}
         className={clsx(
