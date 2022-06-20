@@ -21,6 +21,7 @@ export default {
     Link: StorybookMockLink,
   },
   parameters: {
+    layout: 'fullscreen',
     chromatic: { viewports: [320, 420, 850, 1200] },
   },
 } as Meta<StoryArgs>
