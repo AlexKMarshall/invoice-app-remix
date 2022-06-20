@@ -4,9 +4,11 @@ import type { Except } from 'type-fest'
 
 type Props = Except<AllHTMLAttributes<HTMLDivElement>, 'className'> & {
   as?: 'header' | 'div'
+  zIndex?: 'z-20'
 }
 export function Header({
   as: AsComponent = 'header',
+  zIndex,
   ...props
 }: Props): JSX.Element {
   return (
@@ -15,7 +17,8 @@ export function Header({
       className={clsx(
         'flex flex-none justify-start overflow-hidden',
         'bg-gray-700 dark:bg-gray-800',
-        'lg:flex-col lg:rounded-r-3xl'
+        'lg:flex-col lg:rounded-r-3xl',
+        zIndex
       )}
     >
       <div
