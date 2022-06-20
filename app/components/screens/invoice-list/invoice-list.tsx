@@ -5,14 +5,11 @@ import clsx from 'clsx'
 import { Button } from '~/components/atoms/button'
 
 type Props = {
-  invoiceListItems: InvoiceListItemType[]
+  items: InvoiceListItemType[]
   Link?: typeof RemixLink
 }
-export function Invoices({
-  invoiceListItems,
-  Link = RemixLink,
-}: Props): JSX.Element {
-  const invoiceCount = invoiceListItems.length
+export function InvoiceList({ items, Link = RemixLink }: Props): JSX.Element {
+  const invoiceCount = items.length
 
   const smallCountText = `${invoiceCount} invoices`
   const largeCountText = `There are ${invoiceCount} total invoices`
@@ -39,7 +36,7 @@ export function Invoices({
         </Button>
       </div>
       <ul className="space-y-4">
-        {invoiceListItems.map((invoice) => (
+        {items.map((invoice) => (
           <li key={invoice.id}>
             <InvoiceListItem {...invoice} Link={Link} />
           </li>

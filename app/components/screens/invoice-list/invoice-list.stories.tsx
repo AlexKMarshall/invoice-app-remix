@@ -6,14 +6,14 @@ import type { Meta, Story } from '@storybook/react'
 
 import { ColorSchemeContainer } from '~/storybook-helpers/color-scheme-container'
 import type { ComponentProps } from 'react'
-import { Invoices } from '.'
+import { InvoiceList } from '.'
 
-type StoryArgs = ComponentProps<typeof Invoices> &
+type StoryArgs = ComponentProps<typeof InvoiceList> &
   ComponentProps<typeof LinkActionWrapper>
 
 export default {
-  title: 'Screens/Invoices',
-  component: Invoices,
+  title: 'Screens/Invoice-List',
+  component: InvoiceList,
   argTypes: {
     onWouldNavigate: { action: true },
   },
@@ -28,13 +28,13 @@ export default {
 
 const Template: Story<StoryArgs> = ({ onWouldNavigate, ...args }) => (
   <LinkActionWrapper onWouldNavigate={onWouldNavigate}>
-    <ColorSchemeContainer lightMode={<Invoices {...args} />} />
+    <ColorSchemeContainer lightMode={<InvoiceList {...args} />} />
   </LinkActionWrapper>
 )
 
 export const Default = Template.bind({})
 Default.args = {
-  invoiceListItems: [
+  items: [
     {
       id: 'rt3080',
       customerName: 'Jensen Huang',

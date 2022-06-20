@@ -1,7 +1,7 @@
 import { json, useLoaderData } from 'remix-utils'
 
+import { InvoiceList } from '~/components/screens/invoice-list'
 import type { InvoiceListItem } from '~/models/invoice.validator'
-import { Invoices } from '~/components/screens/invoices'
 import type { LoaderFunction } from '@remix-run/node'
 import { Outlet } from '@remix-run/react'
 import { getInvoiceListItems } from '~/models/invoice.server'
@@ -65,7 +65,7 @@ export default function InvoicesIndexPage() {
 
   return (
     <div>
-      <Invoices invoiceListItems={invoiceListItems} />
+      <InvoiceList items={invoiceListItems} />
     </div>
   )
 }
