@@ -15,7 +15,11 @@ import {
 
 import tailwindStylesheetUrl from './styles/tailwind.css'
 import { getUser } from './session.server'
-import { Layout } from './components/screens/layout'
+import { Header } from './components/molecules/header'
+import {
+  DrawerPortal,
+  DrawerPortalProvider,
+} from './components/atoms/drawer/drawer'
 
 export const links: LinksFunction = () => {
   return [
@@ -35,7 +39,7 @@ export const links: LinksFunction = () => {
 
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
-  title: 'Remix Notes',
+  title: 'Invoice App',
   viewport: 'width=device-width,initial-scale=1',
 })
 
@@ -56,8 +60,19 @@ export default function App() {
         <Meta />
         <Links />
       </head>
+
       <body className="h-full font-medium">
-        <Layout main={<Outlet />} />
+        <DrawerPortalProvider>
+          <div className="relative flex flex-col min-h-full lg:flex-row">
+            <Header zIndex="z-20" />
+            <main className="z-0 flex-grow px-6 py-8 sm:px-12 sm:py-14 lg:py-16">
+              <div className="max-w-3xl mx-auto">
+                <Outlet />
+              </div>
+            </main>
+            <DrawerPortal />
+          </div>
+        </DrawerPortalProvider>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
