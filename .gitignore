@@ -4,6 +4,8 @@ node_modules
 /public/build
 .env
 
+*.log
+
 /cypress/screenshots
 /cypress/videos
 /prisma/data.db

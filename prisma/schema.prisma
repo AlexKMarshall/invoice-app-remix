@@ -36,3 +36,13 @@ model Note {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String
 }
+
+model Invoice {
+  internalId   String   @id @default(cuid())
+  id           String   @unique()
+  due          DateTime
+  customerName String
+  totalAmount  Decimal
+  currency     String
+  status       String
+}

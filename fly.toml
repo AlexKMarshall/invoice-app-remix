@@ -1,4 +1,4 @@
-app = "invoice-app-remix-33ca"
+app = "invoice-app-remix"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = [ ]
