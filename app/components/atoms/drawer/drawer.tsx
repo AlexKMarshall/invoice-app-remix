@@ -21,18 +21,13 @@ export function Drawer({ children, open, onOpenChange }: Props): JSX.Element {
               } as CSSProperties
             }
             className={clsx(
-              'fixed bottom-0 left-0 right-0 bg-white',
+              'fixed bottom-0 left-0 right-0 overflow-y-scroll bg-white',
               'top-[var(--header-height)] pt-6 pr-6 pb-6 pl-6',
-              'sm:top-[var(--header-height)] sm:right-[unset] sm:max-w-xl sm:rounded-r-3xl sm:pt-14 sm:pr-14 sm:pb-14 sm:pl-14',
+              'sm:right-[unset] sm:max-w-xl sm:rounded-r-3xl sm:pt-14 sm:pr-14 sm:pb-14 sm:pl-14',
               'lg:top-0 lg:max-w-3xl lg:pl-[calc(var(--header-width)_+_56px)]', // padding calculated so drawer background extends behind sidebar
               'dark:bg-slate-800'
             )}
           >
-            Drawer Content with a lot of text Lorem, ipsum. Lorem ipsum, dolor
-            sit amet consectetur adipisicing elit. Excepturi, unde error harum
-            rerum, et iusto molestiae laborum aliquid autem delectus omnis
-            magnam reprehenderit voluptatem, in rem nobis! Distinctio, ad
-            libero!
             {children}
           </div>
         </Dialog.Content>
