@@ -11,7 +11,7 @@ export function Drawer({ children, open, onOpenChange }: Props): JSX.Element {
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal container={portalContainer}>
-        <Dialog.Overlay className="fixed inset-0 bg-gray-900/50" />
+        <Dialog.Overlay className="fixed inset-0 bg-black/50" />
         <Dialog.Content>
           <div
             style={
@@ -24,8 +24,8 @@ export function Drawer({ children, open, onOpenChange }: Props): JSX.Element {
               'fixed bottom-0 left-0 right-0 overflow-y-scroll bg-white',
               'top-[var(--header-height)] pt-6 pr-6 pb-6 pl-6',
               'sm:right-[unset] sm:max-w-xl sm:rounded-r-3xl sm:pt-14 sm:pr-14 sm:pb-14 sm:pl-14',
-              'lg:top-0 lg:max-w-3xl lg:pl-[calc(var(--header-width)_+_56px)]', // padding calculated so drawer background extends behind sidebar
-              'dark:bg-slate-800'
+              'lg:top-0 lg:max-w-3xl lg:overflow-y-visible lg:pl-[calc(var(--header-width)_+_56px)]', // padding calculated so drawer background extends behind sidebar
+              'dark:bg-[hsl(233deg_30%_11%)]'
             )}
           >
             {children}
