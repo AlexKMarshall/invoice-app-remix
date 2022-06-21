@@ -1,13 +1,14 @@
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 import { faker } from '@faker-js/faker'
+import { getNewId } from '~/utils'
 
 const prisma = new PrismaClient()
 
 const createNewInvoice = () =>
   prisma.invoice.create({
     data: {
-      id: faker.datatype.string(6),
+      id: getNewId(),
       currency: 'GBP',
       status: faker.helpers.arrayElement(['draft', 'pending', 'paid']),
       client: {
@@ -32,12 +33,6 @@ const createNewInvoice = () =>
       },
     },
   })
-
-const getNewClient = () => ({
-  name: faker.name.findName(),
-  email: faker.internet.email(),
-  address: getNewAddress(),
-})
 
 const getNewAddress = () => ({
   lineOne: faker.address.streetAddress(),
