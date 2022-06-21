@@ -53,18 +53,18 @@ Empty.args = {}
 export const Completed = Template.bind({})
 Completed.play = async ({ args, canvasElement }) => {
   const form = {
-    fromStreetAddress: '19 Union Terrace',
-    fromCity: 'London',
-    fromPostCode: 'E1 3EZ',
-    fromCountry: 'United Kingdom',
+    fromAddressLineOne: '19 Union Terrace',
+    fromAddressCity: 'London',
+    fromAddressPostcode: 'E1 3EZ',
+    fromAddressCountry: 'United Kingdom',
     clientName: 'Alex Grim',
     clientEmail: 'alexgrim@mail.com',
-    toStreetAddress: '23 Lincoln Square',
-    toCity: 'Bradford',
-    toPostCode: 'BD1 9PB',
-    toCountry: 'United Kingdom',
-    invoiceDate: '2021-08-21',
-    paymentTerms: 'Net 30 Days',
+    clientAddressLineOne: '23 Lincoln Square',
+    clientAddressCity: 'Bradford',
+    clientAddressPostcode: 'BD1 9PB',
+    clientAddressCountry: 'United Kingdom',
+    issuedAt: '2021-08-21',
+    paymentTerms: '30',
     projectDescription: 'Graphic Design',
     itemName: 'Banner Design',
     quantity: '1',
@@ -79,19 +79,19 @@ Completed.play = async ({ args, canvasElement }) => {
     )
     await userEvent.type(
       billFromFieldset.getByLabelText(/street address/i),
-      form.fromStreetAddress
+      form.fromAddressLineOne
     )
     await userEvent.type(
       billFromFieldset.getByLabelText(/city/i),
-      form.fromCity
+      form.fromAddressCity
     )
     await userEvent.type(
       billFromFieldset.getByLabelText(/post code/i),
-      form.fromPostCode
+      form.fromAddressPostcode
     )
     await userEvent.type(
       billFromFieldset.getByLabelText(/country/i),
-      form.fromCountry
+      form.fromAddressCountry
     )
 
     const billToFieldset = within(
@@ -107,22 +107,22 @@ Completed.play = async ({ args, canvasElement }) => {
     )
     await userEvent.type(
       billToFieldset.getByLabelText(/street address/i),
-      form.toStreetAddress
+      form.clientAddressLineOne
     )
-    await userEvent.type(billToFieldset.getByLabelText(/city/i), form.toCity)
+    await userEvent.type(
+      billToFieldset.getByLabelText(/city/i),
+      form.clientAddressCity
+    )
     await userEvent.type(
       billToFieldset.getByLabelText(/post code/i),
-      form.toPostCode
+      form.clientAddressPostcode
     )
     await userEvent.type(
       billToFieldset.getByLabelText(/country/i),
-      form.toCountry
+      form.clientAddressCountry
     )
 
-    await userEvent.type(
-      canvas.getByLabelText(/invoice date/i),
-      form.invoiceDate
-    )
+    await userEvent.type(canvas.getByLabelText(/invoice date/i), form.issuedAt)
     await userEvent.type(
       canvas.getByLabelText(/payment terms/i),
       form.paymentTerms

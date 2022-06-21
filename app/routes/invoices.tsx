@@ -43,7 +43,6 @@ const reviver = (key: string, value: unknown) => {
 
 export const loader: LoaderFunction = async () => {
   const invoiceListItems = await getInvoiceListItems()
-  console.log(invoiceListItems)
   return json<LoaderData>({ invoiceListItems }, { replacer })
 }
 

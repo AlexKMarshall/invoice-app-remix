@@ -1,5 +1,6 @@
 import { Form as RemixForm, Link as RemixLink } from '@remix-run/react'
 import { useId, useState } from 'react'
+import { format, startOfToday } from 'date-fns'
 
 import { Button } from '~/components/atoms/button'
 import { Input } from '~/components/atoms/input'
@@ -17,7 +18,7 @@ export function NewInvoiceForm({
   const billToId = useId()
 
   return (
-    <Form>
+    <Form method="post">
       <h1 className="mb-6 text-2xl font-bold text-strong">New Invoice</h1>
       <h2
         id={billFromId}
@@ -31,12 +32,16 @@ export function NewInvoiceForm({
       >
         <Input
           label="Street Address"
-          name="fromStreetAddress"
+          name="fromAddressLineOne"
           colSpan="col-span-full"
         />
-        <Input label="City" name="fromCity" />
-        <Input label="Post Code" name="fromPostCode" />
-        <Input label="Country" name="fromCountry" colSpan="col-span-full" />
+        <Input label="City" name="fromAddressCity" />
+        <Input label="Post Code" name="fromAddressPostcode" />
+        <Input
+          label="Country"
+          name="fromAddressCountry"
+          colSpan="col-span-full"
+        />
       </fieldset>
       <h2
         id={billToId}
@@ -61,24 +66,44 @@ export function NewInvoiceForm({
         />
         <Input
           label="Street Address"
-          name="toStreetAddress"
+          name="clientAddressLineOne"
           colSpan="col-span-full"
         />
-        <Input label="City" name="toCity" />
-        <Input label="Post Code" name="toPostCode" />
-        <Input label="Country" name="toCountry" colSpan="col-span-full" />
+        <Input label="City" name="clientAddressCity" />
+        <Input label="Post Code" name="clientAddressPostcode" />
+        <Input
+          label="Country"
+          name="clientAddressCountry"
+          colSpan="col-span-full"
+        />
       </fieldset>
 
-      <Input label="Invoice Date" name="invoiceDate" type="date" mb="mb-6" />
-      <Input label="Payment Terms" name="paymentTerms" mb="mb-6" />
+      <Input
+        label="Invoice Date"
+        name="issuedAt"
+        type="date"
+        defaultValue={format(startOfToday(), 'yyyy-MM-dd')}
+        mb="mb-6"
+      />
+      <Input
+        label="Payment Terms"
+        name="paymentTerms"
+        type="number"
+        mb="mb-6"
+      />
       <Input label="Project Description" name="projectDescription" mb="mb-16" />
 
       <h2 className="mb-6 text-lg font-bold text-muted">Item list</h2>
       <div className="flex flex-col gap-6 mb-20">
         <Input label="Item Name" name="itemName" />
         <div className="flex gap-4">
-          <Input label="Qty." name="quantity" aria-label="Quantity" />
-          <Input label="Price" name="price" />
+          <Input
+            label="Qty."
+            name="itemQuantity"
+            aria-label="Quantity"
+            type="number"
+          />
+          <Input label="Price" name="itemPrice" type="number" />
         </div>
       </div>
       <input type="hidden" name="status" value={status} />
