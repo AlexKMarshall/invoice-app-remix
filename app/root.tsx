@@ -12,6 +12,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from '@remix-run/react'
+import useMeasure from 'react-use-measure'
 
 import tailwindStylesheetUrl from './styles/tailwind.css'
 import { getUser } from './session.server'
@@ -54,6 +55,8 @@ export const loader: LoaderFunction = async ({ request }) => {
 }
 
 export default function App() {
+  const [headerRef, headerBounds] = useMeasure()
+
   return (
     <html lang="en" className="h-full">
       <head>
@@ -62,9 +65,12 @@ export default function App() {
       </head>
 
       <body className="h-full font-medium">
-        <DrawerPortalProvider>
+        <DrawerPortalProvider
+          headerHeight={headerBounds.height}
+          headerWidth={headerBounds.width}
+        >
           <div className="relative flex flex-col min-h-full lg:flex-row">
-            <Header zIndex="z-20" />
+            <Header zIndex="z-20" ref={headerRef} />
             <main className="z-0 flex-grow px-6 py-8 sm:px-12 sm:py-14 lg:py-16">
               <div className="max-w-3xl mx-auto">
                 <Outlet />

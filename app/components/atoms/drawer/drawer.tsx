@@ -1,19 +1,38 @@
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import { useState } from 'react'
 import { createContext, useContext } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
+import clsx from 'clsx'
 
 type Props = { children: ReactNode; open?: boolean; onOpenChange?: () => void }
 export function Drawer({ children, open, onOpenChange }: Props): JSX.Element {
-  const { portalContainer: portalState } = useDrawerPortal()
+  const { portalContainer, headerHeight, headerWidth } = useDrawerPortal()
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
-      <Dialog.Portal container={portalState}>
-        <Dialog.Overlay />
+      <Dialog.Portal container={portalContainer}>
+        <Dialog.Overlay className="fixed inset-0 bg-gray-900/50" />
         <Dialog.Content>
-          <div className="absolute inset-0 bg-green-300 p-8 pt-[calc(74px_+_2rem)] lg:pl-[calc(104px_+_2rem)] lg:pt-8">
-            Drawer Content with a lot of text Lorem, ipsum.
+          <div
+            style={
+              {
+                '--header-height': `${headerHeight}px`,
+                '--header-width': `${headerWidth}px`,
+              } as CSSProperties
+            }
+            className={clsx(
+              'fixed bottom-0 left-0 right-0 bg-white',
+              'top-[var(--header-height)] pt-6 pr-6 pb-6 pl-6',
+              'sm:top-[var(--header-height)] sm:right-[unset] sm:max-w-xl sm:rounded-r-3xl sm:pt-14 sm:pr-14 sm:pb-14 sm:pl-14',
+              'lg:top-0 lg:max-w-3xl lg:pl-[calc(var(--header-width)_+_56px)]', // padding calculated so drawer background extends behind sidebar
+              'dark:bg-slate-800'
+            )}
+          >
+            Drawer Content with a lot of text Lorem, ipsum. Lorem ipsum, dolor
+            sit amet consectetur adipisicing elit. Excepturi, unde error harum
+            rerum, et iusto molestiae laborum aliquid autem delectus omnis
+            magnam reprehenderit voluptatem, in rem nobis! Distinctio, ad
+            libero!
             {children}
           </div>
         </Dialog.Content>
@@ -27,6 +46,8 @@ type DrawerPortalContextType = {
   setPortalContainer: React.Dispatch<
     React.SetStateAction<HTMLDivElement | null>
   >
+  headerHeight: number
+  headerWidth: number
 }
 const DrawerPortalContext = createContext<DrawerPortalContextType | undefined>(
   undefined
@@ -42,9 +63,13 @@ export const useDrawerPortal = () => {
 }
 
 type DrawerPortalProviderProps = {
+  headerHeight: number
+  headerWidth: number
   children: ReactNode
 }
 export const DrawerPortalProvider = ({
+  headerHeight,
+  headerWidth,
   children,
 }: DrawerPortalProviderProps) => {
   const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(
@@ -54,8 +79,10 @@ export const DrawerPortalProvider = ({
   return (
     <DrawerPortalContext.Provider
       value={{
-        portalContainer: portalContainer,
-        setPortalContainer: setPortalContainer,
+        portalContainer,
+        setPortalContainer,
+        headerHeight,
+        headerWidth,
       }}
     >
       {children}
