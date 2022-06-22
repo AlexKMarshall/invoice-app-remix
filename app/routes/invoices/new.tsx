@@ -1,71 +1,41 @@
+import {
+  parsePostInvoiceForm,
+  postInvoiceFormSchema,
+} from '~/models/invoice.validator'
+
 import type { ActionFunction } from '@remix-run/node'
 import { Drawer } from '~/components/atoms/drawer/drawer'
 import { NewInvoiceForm } from '~/components/screens/new-invoice-form'
 import { getNewId } from '~/utils'
-import { postInvoiceDtoSchema } from '~/models/invoice.validator'
 import { prisma } from '~/db.server'
 import { redirect } from '@remix-run/node'
 
 export const action: ActionFunction = async ({ request }) => {
   const form = await request.formData()
-  const formEntries = Object.fromEntries(form.entries())
   const {
-    issuedAt,
-    paymentTerms,
-    projectDescription,
-    clientName,
-    clientEmail,
-    clientAddressLineOne,
-    clientAddressCity,
-    clientAddressPostcode,
-    clientAddressCountry,
-    fromAddressCity,
-    fromAddressLineOne,
-    fromAddressCountry,
-    fromAddressPostcode,
-    itemName,
-    itemQuantity,
-    itemPrice,
-    status,
-  } = postInvoiceDtoSchema.parse(formEntries)
+    address,
+    client: { address: clientAddress, ...client },
+    item,
+    ...invoice
+  } = parsePostInvoiceForm(form)
 
   await prisma.invoice.create({
     data: {
       id: getNewId(),
       currency: 'GBP',
       address: {
-        create: {
-          lineOne: fromAddressLineOne,
-          city: fromAddressCity,
-          postcode: fromAddressPostcode,
-          country: fromAddressCountry,
-        },
+        create: address,
       },
       client: {
         create: {
-          name: clientName,
-          email: clientEmail,
+          ...client,
           address: {
-            create: {
-              lineOne: clientAddressLineOne,
-              city: clientAddressCity,
-              postcode: clientAddressPostcode,
-              country: clientAddressCountry,
-            },
+            create: clientAddress,
           },
         },
       },
-      issuedAt,
-      paymentTerms,
-      projectDescription,
-      lineItem: {
-        create: {
-          name: itemName,
-          quantity: itemQuantity,
-          price: itemPrice,
-        },
-      },
-      status,
+      lineItem: { create: item },
+      ...invoice,
     },
   })
 
