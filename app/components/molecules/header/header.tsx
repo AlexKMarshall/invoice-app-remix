@@ -17,7 +17,7 @@ export function Header({
       className={clsx(
         'flex flex-none justify-start overflow-hidden',
         'bg-gray-700 dark:bg-gray-800',
-        'lg:flex-col lg:rounded-r-3xl',
+        'lg:sticky lg:top-0 lg:min-h-[100vh] lg:flex-col lg:self-start lg:rounded-r-3xl',
         zIndex
       )}
     >

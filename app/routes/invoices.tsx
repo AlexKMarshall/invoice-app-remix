@@ -3,7 +3,6 @@ import { json, useLoaderData } from 'remix-utils'
 import { InvoiceList } from '~/components/screens/invoice-list'
 import type { InvoiceListItem } from '~/models/invoice.validator'
 import type { LoaderFunction } from '@remix-run/node'
-import { Outlet } from '@remix-run/react'
 import { getInvoiceListItems } from '~/models/invoice.server'
 import { invoiceListItemSchema } from '~/models/invoice.validator'
 import { parseJSON } from 'date-fns'
@@ -43,6 +42,7 @@ const reviver = (key: string, value: unknown) => {
 
 export const loader: LoaderFunction = async () => {
   const invoiceListItems = await getInvoiceListItems()
+  console.log(invoiceListItems)
   return json<LoaderData>({ invoiceListItems }, { replacer })
 }
 
