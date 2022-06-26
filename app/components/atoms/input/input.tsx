@@ -51,7 +51,7 @@ export function Input({
         className={clsx(
           'w-full min-w-0 rounded-sm bg-gray-50 px-5 py-4 font-bold text-strong caret-violet-600 outline outline-2 outline-regular/40',
           'focus-visible:outline-violet-600',
-          'dark:bg-gray-800 dark:outline-transparent dark:focus-visible:outline-violet-600',
+          'dark:bg-[hsl(233deg_31%_17%)] dark:outline-transparent dark:focus-visible:outline-violet-600',
           'aria-invalid:outline-red-600 aria-invalid:dark:outline-red-500'
         )}
       />
