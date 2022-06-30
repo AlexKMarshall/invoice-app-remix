@@ -1,11 +1,11 @@
 import { Form as RemixForm, Link as RemixLink } from '@remix-run/react'
-import { useId, useState } from 'react'
 import { format, startOfToday } from 'date-fns'
 
 import { Button } from '~/components/atoms/button'
 import { Input } from '~/components/atoms/input'
-import type { z } from 'zod'
 import type { postInvoiceFormSchema } from '~/models/invoice.validator'
+import { useId } from 'react'
+import type { z } from 'zod'
 
 type Props = {
   errors?: z.inferFlattenedErrors<typeof postInvoiceFormSchema>
@@ -17,7 +17,6 @@ export function NewInvoiceForm({
   Link = RemixLink,
   Form = RemixForm,
 }: Props): JSX.Element {
-  const [status, setStatus] = useState<'draft' | 'pending'>('draft')
   const billFromId = useId()
   const billToId = useId()
 
@@ -149,7 +148,6 @@ export function NewInvoiceForm({
           />
         </div>
       </div>
-      <input type="hidden" name="status" value={status} />
       <div className="flex gap-2">
         <Button
           color="secondary"
@@ -164,7 +162,8 @@ export function NewInvoiceForm({
         <Button
           color="monochrome"
           type="submit"
-          onClick={() => setStatus('draft')}
+          name="status"
+          value="draft"
           px="px-4"
         >
           Save as Draft
@@ -172,7 +171,8 @@ export function NewInvoiceForm({
         <Button
           color="primary"
           type="submit"
-          onClick={() => setStatus('pending')}
+          name="status"
+          value="pending"
           px="px-4"
         >
           Save &amp; Send
