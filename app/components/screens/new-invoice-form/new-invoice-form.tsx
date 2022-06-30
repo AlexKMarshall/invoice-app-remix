@@ -4,12 +4,16 @@ import { format, startOfToday } from 'date-fns'
 
 import { Button } from '~/components/atoms/button'
 import { Input } from '~/components/atoms/input'
+import type { z } from 'zod'
+import type { postInvoiceFormSchema } from '~/models/invoice.validator'
 
 type Props = {
+  errors?: z.inferFlattenedErrors<typeof postInvoiceFormSchema>
   Link?: typeof RemixLink
   Form?: typeof RemixForm
 }
 export function NewInvoiceForm({
+  errors,
   Link = RemixLink,
   Form = RemixForm,
 }: Props): JSX.Element {
@@ -34,13 +38,23 @@ export function NewInvoiceForm({
           label="Street Address"
           name="fromAddressLineOne"
           colSpan="col-span-full"
+          errorMessage={errors?.fieldErrors.fromAddressLineOne?.join(',')}
         />
-        <Input label="City" name="fromAddressCity" />
-        <Input label="Post Code" name="fromAddressPostcode" />
+        <Input
+          label="City"
+          name="fromAddressCity"
+          errorMessage={errors?.fieldErrors.fromAddressCity?.join(',')}
+        />
+        <Input
+          label="Post Code"
+          name="fromAddressPostcode"
+          errorMessage={errors?.fieldErrors.fromAddressPostcode?.join(',')}
+        />
         <Input
           label="Country"
           name="fromAddressCountry"
           colSpan="col-span-full"
+          errorMessage={errors?.fieldErrors.fromAddressCountry?.join(',')}
         />
       </fieldset>
       <h2
@@ -57,24 +71,36 @@ export function NewInvoiceForm({
           label="Client's Name"
           name="clientName"
           colSpan="col-span-full"
+          errorMessage={errors?.fieldErrors.clientName?.join(',')}
         />
         <Input
           label="Client's Email"
           name="clientEmail"
           type="email"
           colSpan="col-span-full"
+          errorMessage={errors?.fieldErrors.clientName?.join(',')}
         />
         <Input
           label="Street Address"
           name="clientAddressLineOne"
           colSpan="col-span-full"
+          errorMessage={errors?.fieldErrors.clientAddressLineOne?.join(',')}
         />
-        <Input label="City" name="clientAddressCity" />
-        <Input label="Post Code" name="clientAddressPostcode" />
+        <Input
+          label="City"
+          name="clientAddressCity"
+          errorMessage={errors?.fieldErrors.clientAddressCity?.join(',')}
+        />
+        <Input
+          label="Post Code"
+          name="clientAddressPostcode"
+          errorMessage={errors?.fieldErrors.clientAddressPostcode?.join(',')}
+        />
         <Input
           label="Country"
           name="clientAddressCountry"
           colSpan="col-span-full"
+          errorMessage={errors?.fieldErrors.clientAddressCountry?.join(',')}
         />
       </fieldset>
 
@@ -84,26 +110,43 @@ export function NewInvoiceForm({
         type="date"
         defaultValue={format(startOfToday(), 'yyyy-MM-dd')}
         mb="mb-6"
+        errorMessage={errors?.fieldErrors.issuedAt?.join(',')}
       />
       <Input
         label="Payment Terms"
         name="paymentTerms"
         type="number"
         mb="mb-6"
+        errorMessage={errors?.fieldErrors.paymentTerms?.join(',')}
       />
-      <Input label="Project Description" name="projectDescription" mb="mb-16" />
+      <Input
+        label="Project Description"
+        name="projectDescription"
+        mb="mb-16"
+        errorMessage={errors?.fieldErrors.projectDescription?.join(',')}
+      />
 
       <h2 className="mb-6 text-lg font-bold text-muted">Item list</h2>
       <div className="flex flex-col gap-6 mb-20">
-        <Input label="Item Name" name="itemName" />
+        <Input
+          label="Item Name"
+          name="itemName"
+          errorMessage={errors?.fieldErrors.itemName?.join(',')}
+        />
         <div className="flex gap-4">
           <Input
             label="Qty."
             name="itemQuantity"
             aria-label="Quantity"
             type="number"
+            errorMessage={errors?.fieldErrors.itemQuantity?.join(',')}
           />
-          <Input label="Price" name="itemPrice" type="number" />
+          <Input
+            label="Price"
+            name="itemPrice"
+            type="number"
+            errorMessage={errors?.fieldErrors.itemPrice?.join(',')}
+          />
         </div>
       </div>
       <input type="hidden" name="status" value={status} />
