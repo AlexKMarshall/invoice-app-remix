@@ -1,21 +1,25 @@
 import clsx from 'clsx'
 import type { AllHTMLAttributes } from 'react'
+import { forwardRef } from 'react'
 import type { Except } from 'type-fest'
 
 type Props = Except<AllHTMLAttributes<HTMLDivElement>, 'className'> & {
   as?: 'header' | 'div'
+  zIndex?: 'z-20'
 }
-export function Header({
-  as: AsComponent = 'header',
-  ...props
-}: Props): JSX.Element {
+export const Header = forwardRef<HTMLDivElement, Props>(function Header(
+  { as: AsComponent = 'header', zIndex, ...props },
+  ref
+): JSX.Element {
   return (
     <AsComponent
+      ref={ref}
       {...props}
       className={clsx(
         'flex flex-none justify-start overflow-hidden',
         'bg-gray-700 dark:bg-gray-800',
-        'lg:flex-col lg:rounded-r-3xl'
+        'lg:sticky lg:top-0 lg:min-h-[100vh] lg:flex-col lg:self-start lg:rounded-r-3xl',
+        zIndex
       )}
     >
       <div
@@ -39,4 +43,4 @@ export function Header({
       </div>
     </AsComponent>
   )
-}
+})

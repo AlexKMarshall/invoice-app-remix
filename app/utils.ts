@@ -1,7 +1,6 @@
+import type { User } from '~/models/user.server'
 import { useMatches } from '@remix-run/react'
 import { useMemo } from 'react'
-
-import type { User } from '~/models/user.server'
 
 const DEFAULT_REDIRECT = '/'
 
@@ -69,3 +68,16 @@ export function useUser(): User {
 export function validateEmail(email: unknown): email is string {
   return typeof email === 'string' && email.length > 3 && email.includes('@')
 }
+
+const getRandomDigit = () => Math.floor(Math.random() * 10)
+
+const getRandomLetter = () => {
+  const randomOffset = Math.floor(Math.random() * 26)
+  return String.fromCharCode('a'.charCodeAt(0) + randomOffset)
+}
+
+export const getNewId = (): string =>
+  [
+    ...Array.from({ length: 2 }, getRandomLetter),
+    ...Array.from({ length: 4 }, getRandomDigit),
+  ].join('')

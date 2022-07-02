@@ -1,9 +1,50 @@
-import type { ButtonHTMLAttributes } from 'react'
+import type { ComponentPropsWithoutRef, ReactNode } from 'react'
+
 import type { ClassValue } from 'clsx'
-import type { Except } from 'type-fest'
+import type { Link } from '@remix-run/react'
+import React from 'react'
 import clsx from 'clsx'
 
 type Color = 'primary' | 'secondary' | 'monochrome' | 'danger'
+
+type ButtonOrLink = React.ElementType | typeof Link
+
+// https://www.benmvp.com/blog/polymorphic-react-components-typescript/
+type BaseProps<C extends ButtonOrLink> = {
+  as?: C
+
+  children: ReactNode
+  color?: Color
+  px?: Responsive<SpaceProperty<'px'>>
+  mr?: Responsive<MarginProperty<'mr'>>
+}
+
+type Props<C extends ButtonOrLink> = BaseProps<C> &
+  Omit<ComponentPropsWithoutRef<C>, keyof BaseProps<C> | 'className'>
+
+export function Button<C extends ButtonOrLink = 'button'>({
+  as,
+  color = 'primary',
+  px = 'px-6',
+  mr,
+  ...props
+}: Props<C>): JSX.Element {
+  const Component = as || 'button'
+
+  return (
+    <Component
+      {...props}
+      className={clsx(
+        'inline-grid place-content-center rounded-full py-4 font-bold outline outline-transparent',
+        'focus-visible:outline-2 focus-visible:outline-offset-4',
+        'active:brightness-90',
+        colorClassNameMap[color],
+        px,
+        mr
+      )}
+    />
+  )
+}
 
 const colorClassNameMap: Record<Color, ClassValue> = {
   primary: clsx(
@@ -33,20 +74,16 @@ const colorClassNameMap: Record<Color, ClassValue> = {
   ),
 }
 
-type Props = { color?: Color } & Except<
-  ButtonHTMLAttributes<HTMLButtonElement>,
-  'className'
->
-export function Button({ color = 'primary', ...props }: Props): JSX.Element {
-  return (
-    <button
-      {...props}
-      className={clsx(
-        'rounded-full py-4 px-6 font-bold outline outline-transparent',
-        'focus-visible:outline-2 focus-visible:outline-offset-4',
-        'active:brightness-90',
-        colorClassNameMap[color]
-      )}
-    />
-  )
-}
+type BreakPoint = '' | 'sm:' | 'md:' | 'lg:'
+
+type Responsive<T extends string> = `${BreakPoint}${T}`
+
+const spaceScale = [
+  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 20, 24, 28, 32, 36, 40, 44,
+  48, 52, 56, 60, 64, 72, 80, 96,
+] as const
+type SpaceValue = typeof spaceScale[number]
+type SpaceProperty<Property extends string> = `${Property}-${SpaceValue}`
+type MarginProperty<Property extends string> = `${Property}-${
+  | SpaceValue
+  | 'auto'}`

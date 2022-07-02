@@ -15,7 +15,7 @@ export function ColorSchemeContainer({
       <div className="p-4 space-y-4 rounded surface-1">
         <h2 className="text-lg font-bold text-strong">Light Mode</h2>
         <div
-          data-testId="light-mode"
+          data-testid="light-mode"
           className={layout === 'fullwidth' ? '-mx-4' : ''}
         >
           {lightMode}
@@ -25,7 +25,7 @@ export function ColorSchemeContainer({
         <div className="p-4 space-y-4 rounded surface-1">
           <h2 className="text-lg font-bold text-strong">Dark Mode</h2>
           <div
-            data-testId="dark-mode"
+            data-testid="dark-mode"
             className={layout === 'fullwidth' ? '-mx-4' : ''}
           >
             {darkMode}

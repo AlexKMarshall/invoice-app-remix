@@ -1,4 +1,4 @@
-import { validateEmail } from './utils'
+import { getNewId, validateEmail } from './utils'
 
 test('validateEmail returns false for non-emails', () => {
   expect(validateEmail(undefined)).toBe(false)
@@ -10,4 +10,8 @@ test('validateEmail returns false for non-emails', () => {
 
 test('validateEmail returns true for emails', () => {
   expect(validateEmail('kody@example.com')).toBe(true)
+})
+
+test('getNewId generates an alphanumeric id in the form ab1234', () => {
+  expect(getNewId()).toMatch(/^[a-z]{2}\d{4}$/)
 })

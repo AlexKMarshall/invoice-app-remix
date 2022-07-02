@@ -17,6 +17,7 @@ module.exports = {
         },
         regular: 'hsl(var(--text-regular) / <alpha-value>)',
         strong: 'hsl(var(--text-strong) / <alpha-value>)',
+        muted: 'hsl(var(--text-muted) / <alpha-value>)',
       },
     },
   },
